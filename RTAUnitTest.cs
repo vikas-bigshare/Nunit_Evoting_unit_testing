@@ -23,7 +23,7 @@ namespace Evoting_Nunit_test
         public string token { get; set; }
         public string userid { get; set; }
         public int docno { get; set; }
-        public string event_id { get; set; }
+       // public string event_id { get; set; }
         public int filedocid { get; set; }
         public string fileLocMove { get; set; }
         public class data
@@ -95,36 +95,27 @@ namespace Evoting_Nunit_test
             //Assert.IsNotNull(check.Message);
             // Assert.AreEqual(200, check.statusCode);
         }
-        //[SetUp]
-        //[Test, Order(6)]
-        //public async Task Test_Postgenerateevent()
-        //{
-        //    RTA _objcom = new RTA();
-        //    var check = await _objcom.Post_GenerateEvent(Company.generate_event(), token);
-        //    jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-        //    jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-        //    event_id = jsonparsingcls1.Data.event_id;
-        //}
+       
         [SetUp]
         [Test, Order(6)]
         public async Task Test_Geteventlistcurrent()
         {
             RTA _objcom = new RTA();
-            var check = await _objcom.Get_EventList("current", token);
-            string msg = check.message;
+            var check = await _objcom.Get_EventList("past", token);
+            Assert.AreEqual(200, check.statusCode);
         }
-        //[SetUp]
-        //[Test, Order(8)]
-        //public async Task Test_Putgenerateevent()
-        //{
-        //    RTA _objcom = new RTA();
-        //    var check = await _objcom.Put_Company_Eventdetails(Company.Com_event_detail(event_id), token);
-        //    jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-        //    jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-        //    string msg = jsonparsingcls1.message;
-        //}
         [SetUp]
         [Test, Order(7)]
+        public async Task Test_Putgenerateevent()
+        {
+            RTA _objcom = new RTA();
+            var check = await _objcom.Put_Prifile(RTA.Registration(),token);
+            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
+            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
+            string msg = jsonparsingcls1.message;
+        }
+        [SetUp]
+        [Test, Order(8)]
         public async Task Test_PostFileUpload()
         {
             RTA _objcom = new RTA();
@@ -133,26 +124,25 @@ namespace Evoting_Nunit_test
             jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
             filedocid = jsonparsingcls1.Data.doc_id;
         }
-
+        ////[SetUp]
+        ////[Test, Order(9)]
+        ////public async Task Test_postROMupload()
+        ////{
+        ////    string event_id = "157";
+        ////    Company _objcom = new Company();
+        ////    var check = await _objcom.Post_Rom_Upload(RTA.romupload(event_id, filedocid), token);
+        ////    // string msg = check.message;
+        ////}
 
         [SetUp]
-        [Test, Order(8)]
-        public async Task Test_postROMupload()
-        {
-            Company _objcom = new Company();
-            var check = await _objcom.Post_Rom_Upload(RTA.romupload(event_id, filedocid), token);
-            // string msg = check.message;
-        }
-
-        [SetUp]
-        [Test, Order(9)]
+        [Test, Order(10)]
         public void romuploadfile_eventid_change()
         {
+            string event_id = "157";
             string filepath = "C:\\Evoting-Github\\Files\\CDSLForTest.txt";
             string Romfile = "C:\\Evoting-Github\\Rom_uploadedFiles\\";
             using (StreamReader sr = new System.IO.StreamReader(filepath))
             {
-                //string eventid = "5555";
                 string changefirstline;
                 string firstline;
                 //string fileLocMove = "";
@@ -171,12 +161,10 @@ namespace Evoting_Nunit_test
                     fs.Close();
                 }
                 File.WriteAllText(fileLocMove, text);
-                //
-
             }
         }
         [SetUp]
-        [Test, Order(10)]
+        [Test, Order(11)]
         public async Task Test_PostNewgeneratedFileUpload()
         {
             RTA _objcom = new RTA();
@@ -186,9 +174,10 @@ namespace Evoting_Nunit_test
             filedocid = jsonparsingcls1.Data.doc_id;
         }
         [SetUp]
-        [Test, Order(11)]
+        [Test, Order(12)]
         public async Task Test_postApprovedEvent()
         {
+            string event_id = "157";
             RTA _objcom = new RTA();
             var check = await _objcom.PostApproved_Event(event_id, token);
             jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
@@ -196,14 +185,15 @@ namespace Evoting_Nunit_test
             string msg = jsonparsingcls1.Data.remark;
         }
         [SetUp]
-        [Test, Order(12)]
+        [Test, Order(13)]
         public async Task Test_Geteventlistapproved()
         {
             RTA _objcom = new RTA();
             var check = await _objcom.Get_EventList("approved", token);
-            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-            string msg = jsonparsingcls1.message;
+            Assert.AreEqual(200, check.statusCode);
+            //jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
+            //jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
+            //string msg = jsonparsingcls1.message;
         }
 
     }

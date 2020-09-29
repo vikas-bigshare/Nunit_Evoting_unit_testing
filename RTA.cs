@@ -269,11 +269,13 @@ namespace Evoting_Nunit_test
             return get_url1;
         }
 
-        public async Task<dynamic> Put_Prifile(FJC_Registration fJC_Registration)
+        public async Task<dynamic> Put_Prifile(FJC_Registration fJC_Registration,string token)
         {
             var get_url1 = await CommanUrl.userprofile().WithHeader("Token", token).PutJsonAsync(fJC_Registration).ReceiveString();
-            return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
+            return get_url1;
         }
+
+      
 
         public async Task<dynamic> Get_Prifile(int aud_id)
         {

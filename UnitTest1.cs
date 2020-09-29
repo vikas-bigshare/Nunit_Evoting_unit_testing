@@ -137,14 +137,14 @@ namespace Evoting_Nunit_test
         }
 
 
-        [SetUp]
-        [Test, Order(10)]
-        public async Task Test_postROMupload()
-        {
-            Company _objcom = new Company();
-            var check = await _objcom.Post_Rom_Upload(Company.romupload(event_id, filedocid), token);
-            // string msg = check.message;
-        }
+        ////[SetUp]
+        ////[Test, Order(10)]
+        ////public async Task Test_postROMupload()
+        ////{
+        ////    Company _objcom = new Company();
+        ////    var check = await _objcom.Post_Rom_Upload(Company.romupload(event_id, filedocid), token);
+        ////    // string msg = check.message;
+        ////}
 
         [SetUp]
         [Test, Order(10)]
@@ -203,9 +203,10 @@ namespace Evoting_Nunit_test
         {
             Company _objcom = new Company();
             var check = await _objcom.Get_EventList("approved", token);
-            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-            string msg = jsonparsingcls1.message;
+            Assert.AreEqual(200, check.statusCode);
+            //jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
+            //jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
+            //string msg = jsonparsingcls1.message;
         }
     }
 }
