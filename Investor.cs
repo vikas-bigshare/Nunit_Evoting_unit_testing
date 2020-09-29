@@ -14,7 +14,7 @@ using System.Text;
 using Microsoft.AspNetCore.Http.Internal;
 using System.Collections.Generic;
 
-namespace NUnitTestProject1
+namespace Evoting_Nunit_test
 {
   public  class Investor
     {

@@ -9,7 +9,7 @@ using System.Dynamic;
 using Newtonsoft.Json.Converters;
 using evoting.Domain.Models;
 
-namespace NUnitTestProject1
+namespace Evoting_Nunit_test
 {
 
     public static class CommanUrl

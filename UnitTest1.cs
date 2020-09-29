@@ -16,7 +16,7 @@ using System.Text;
 using Microsoft.AspNetCore.Http.Internal;
 
 
-namespace NUnitTestProject1
+namespace Evoting_Nunit_test
 {
     [TestFixture]
     public class Tests
@@ -137,14 +137,14 @@ namespace NUnitTestProject1
         }
 
 
-        ////[SetUp]
-        ////[Test, Order(10)]
-        ////public async Task Test_postROMupload()
-        ////{
-        ////    Company _objcom = new Company();
-        ////    var check = await _objcom.Post_Rom_Upload(Company.romupload(event_id, filedocid), token);
-        ////   // string msg = check.message;
-        ////}
+        [SetUp]
+        [Test, Order(10)]
+        public async Task Test_postROMupload()
+        {
+            Company _objcom = new Company();
+            var check = await _objcom.Post_Rom_Upload(Company.romupload(event_id, filedocid), token);
+            // string msg = check.message;
+        }
 
         [SetUp]
         [Test, Order(10)]

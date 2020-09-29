@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 
 
-namespace NUnitTestProject1
+namespace Evoting_Nunit_test
 {
     
     public class Company
@@ -140,7 +140,7 @@ namespace NUnitTestProject1
             return new FJC_Registration()
             {
               
-                reg_type_id = 2,
+                reg_type_id = 1,
                 name = "Testingcompany",
                 reg_no = "Lenovo123",
                 reg_add1 = "Mumbai",

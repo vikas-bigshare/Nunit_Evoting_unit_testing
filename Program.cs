@@ -14,7 +14,8 @@ using System.Text;
 using Microsoft.AspNetCore.Http.Internal;
 using NUnit.Framework;
 
-namespace TryingFLURL
+//namespace TryingFLURL
+namespace Evoting_Nunit_test
 {
     [TestFixture]
     class Program

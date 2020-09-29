@@ -14,15 +14,15 @@ using System.Text;
 using Microsoft.AspNetCore.Http.Internal;
 using System.Collections.Generic;
 
-namespace NUnitTestProject1
+namespace Evoting_Nunit_test
 {
     public class RTA
     {
         public string token { get; set; }
-        public static FJC_LoginRequest Default_user()
+        public static FJC_LoginRequest Default_user(string userid)
         {
             return new FJC_LoginRequest()
-            { UserID = "R200000000000005", system_ip = "127.0.0.128", encrypt_Password = "bigshare@123" };
+            { UserID = userid, system_ip = "127.0.0.128", encrypt_Password = "bigshare@123" };
 
         }
         public static FJC_UpdateEVENT Update_Event()
@@ -76,12 +76,12 @@ namespace NUnitTestProject1
                 PAN_ID = "XXXXXXXXXX"
             };
         }
-        public static FJC_ROMUpload romupload()
+        public static FJC_ROMUpload romupload(string event_id, int filedocid)
         {
             return new FJC_ROMUpload()
             {
-                event_id = 24,
-                doc_id = 61,
+                event_id = Convert.ToInt32(event_id),
+                doc_id = filedocid,
             };
         }
         public static FJC_Registration Registration()
@@ -90,7 +90,7 @@ namespace NUnitTestProject1
             {
                 aud_id = 0,
                 reg_type_id = 2,
-                name = "Testingcompany",
+                name = "TestingRTA",
                 reg_no = "Lenovo123",
                 reg_add1 = "Mumbai",
                 reg_add2 = "Mumbai",
@@ -119,12 +119,12 @@ namespace NUnitTestProject1
             };
 
         }
-        public static FJC_DOC_Upload Docupload()
+        public static FJC_DOC_Upload Docupload(int docid)
         {
             return new FJC_DOC_Upload()
             {
-                doc_id = 69,
-                upload_type = "Tri_partiate_agreement",
+                doc_id = docid,
+                upload_type = "tri_partiate_agreement"
 
             };
 
@@ -159,14 +159,23 @@ namespace NUnitTestProject1
             return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         }
 
-        public async Task<dynamic> Post_FileUpload()
+        public async Task<dynamic> Post_FileUpload(string token)
         {
             var get_url1 = await CommanUrl.ComFileUpload().WithHeader("Token", token).PostMultipartAsync(x =>
-                            x.AddFile("files", @"C:\Evoting-Github\Files\sample_Logo.jpg")
+                            x.AddFile("files", @"C:\Evoting-Github\Files\CDSLForTest.txt")
                             .AddString("upload_type", "ROM")).ReceiveString();
-            return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
+            return get_url1;
+            //return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         }
 
+        public async Task<dynamic> Post_FileUploadnew(string token, string fileLocMove)
+        {
+            var get_url1 = await CommanUrl.ComFileUpload().WithHeader("Token", token).PostMultipartAsync(x =>
+                            x.AddFile("files", fileLocMove)
+                            .AddString("upload_type", "ROM")).ReceiveString();
+            return get_url1;
+            //return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
+        }
         public async Task<dynamic> Get_FileUpload(int doc_id)  
         {
             // var get_url1 = await CommanUrl.ComFileUpload().WithHeader("Token", token).PostJsonAsync(doc_id).ReceiveString();
@@ -180,10 +189,10 @@ namespace NUnitTestProject1
             return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         }
 
-        public async Task<dynamic> PostApproved_Event(int event_id)
+        public async Task<dynamic> PostApproved_Event(string event_id, string token)
         {
             var get_url1 = await CommanUrl.ApprovedEvent().WithHeader("Token", token).PostJsonAsync(event_id).ReceiveString();
-            return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
+            return get_url1;
         }
 
         public async Task<dynamic> Get_List(string str)
@@ -202,9 +211,8 @@ namespace NUnitTestProject1
             return get_url1;
         }
 
-        public async Task<dynamic> Get_EventList(string str)
+        public async Task<dynamic> Get_EventList(string str, string token)
         {
-            //var get_url1 = await CommanUrl.EventList().WithHeader("Token", token).PostJsonAsync(str).ReceiveString();
             var get_url1 = await CommanUrl.EventList().WithHeader("Token", token).SetQueryParam("str", str).GetJsonAsync();
             var message = get_url1.message;
             return get_url1;
@@ -242,23 +250,22 @@ namespace NUnitTestProject1
         //////    return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         //////}
 
-        public async Task<dynamic> Post_DocUpload(FJC_DOC_Upload fJC_DOC_Upload)
+        public async Task<dynamic> Post_DocUpload(FJC_DOC_Upload fJC_DOC_Upload, string token)
         {
             var get_url1 = await CommanUrl.DocUpload().WithHeader("Token", token).PostJsonAsync(fJC_DOC_Upload).ReceiveString();
-            return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
-        }
-
-        public async Task<dynamic> Get_Docdownload()
-        {
-            // var get_url1 = await CommanUrl.DocUpload().WithHeader("token", token).PostJsonAsync().ReceiveString();
-            var get_url1 = await CommanUrl.DocUpload().WithHeader("Token", token).GetJsonAsync();
-            var message = get_url1.message;
             return get_url1;
         }
-        public async Task<dynamic> Post_Docdownload(string DownloadType)   //tri_partiate_agreement
+
+        public async Task<dynamic> Get_Docdownload(string token)
         {
-            var get_url1 = await CommanUrl.DocDownload().WithHeader("Token", token).SetQueryParam("DownloadType", DownloadType).PostJsonAsync("");
-            var message = get_url1.ReasonPhrase.ToString();
+            var get_url1 = await CommanUrl.DocUpload().WithHeader("Token", token).GetJsonAsync();
+            var message = get_url1.statusCode;
+            return get_url1;
+        }
+        public async Task<dynamic> Post_Docdownload(string DownloadType, string token)   //tri_partiate_agreement
+        {
+
+            var get_url1 = await CommanUrl.DocDownload().WithHeader("Token", token).SetQueryParam("DownloadType", DownloadType).PostJsonAsync("").ReceiveString();
             return get_url1;
         }
 
