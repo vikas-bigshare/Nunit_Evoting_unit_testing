@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Http.Internal;
 namespace Evoting_Nunit_test
 {
     [TestFixture]
-    public class Tests
+    public class CompanyUnitTest
     {
         public string token { get; set; }
         public string userid { get; set; }
