@@ -221,10 +221,10 @@ namespace Evoting_Nunit_test
             await rTAUnitTest.Test_getdownloadagreement();
             await rTAUnitTest.Test_Geteventlistcurrent();
             await rTAUnitTest.Test_Putgenerateevent();
-            //await rTAUnitTest.Test_PostFileUpload();
-            await rTAUnitTest.Test_postROMupload();
             rTAUnitTest.romuploadfile_eventid_change();
             await rTAUnitTest.Test_PostNewgeneratedFileUpload();
+            await rTAUnitTest.Test_postROMupload();
+            //await rTAUnitTest.Test_PostFileUpload();
             await rTAUnitTest.Test_postApprovedEvent();
             await rTAUnitTest.Test_Geteventlistapproved();
         }
