@@ -14,8 +14,8 @@ namespace Evoting_Nunit_test
 
     public static class CommanUrl
     {
-         const string DefaultUrl = "http://bigshareonline.com:6001";
-        //const string DefaultUrl = "http://localhost:6000";
+       //const string DefaultUrl = "http://bigshareonline.com:6001";
+        const string DefaultUrl = "http://localhost:6000";
 
         //////////////////////////////////////////////////////company/////////////////////////////////////////////
         public static string Login()
@@ -79,7 +79,7 @@ namespace Evoting_Nunit_test
             return _ComEvntDe;
         }
         public static string Registration()
-        {
+        {                                                                         
             var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("Registration");
             return _ComEvntDe;
         }
@@ -108,7 +108,31 @@ namespace Evoting_Nunit_test
             var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("EVENTDetails");
             return _ComEvntDe;
         }
-
+        public static string Restrictderestrict()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("shareholder");
+            return _ComEvntDe;
+        }
+        public static string EventBlockUnblock()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("event").AppendPathSegment("unblock");
+            return _ComEvntDe;
+        }
+        public static string finalizeevent()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("finalizeevent");
+            return _ComEvntDe;
+        }
+        public static string reportsgeneration()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("reports");
+            return _ComEvntDe;
+        }
+        public static string InvestoreVoting()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("event").AppendPathSegment("vote");
+            return _ComEvntDe;
+        }
 
 
     }

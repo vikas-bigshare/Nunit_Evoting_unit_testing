@@ -19,10 +19,10 @@ namespace Evoting_Nunit_test
    public class Scrutinizer
     {
         public string token { get; set; }
-        public static FJC_LoginRequest Default_user()
+        public static FJC_LoginRequest Default_user(string userid)
         {
             return new FJC_LoginRequest()
-            { UserID = "S300000000000048", system_ip = "127.0.0.60", encrypt_Password = "bigshare@123" };
+            { UserID = userid, system_ip = "127.0.0.60", encrypt_Password = "bigshare@123" };
 
         }
 
@@ -40,14 +40,14 @@ namespace Evoting_Nunit_test
                 reg_city = "Kalyan",
                 reg_pincode = "401001",
                 reg_state_id = 4,
-                reg_country = 1,
+                reg_country_id = 1,  //reg_country_id
                 corres_add1 = "Bigshare Services,1st Floor, Bharat Tin Work ,Makawana Road",
                 corres_add2 = "Marol",
                 corres_add3 = "Andheri East",
                 corres_city = "Mumbai",
                 corres_pincode = "421003",
-                corres_state_id = 4,
-                corres_country = 1,
+                corres_state_id = 4,   
+                corres_country_id = 1,  //corres_country_id
                 pcs_no = "000001",
                 cs_name = "Shivkumar",
                 cs_email_id = "admin@fortunekit.com",
@@ -56,7 +56,7 @@ namespace Evoting_Nunit_test
                 cs_fax_no = "62699990",
                 cs_mobile_no = "1234567890",
                 panid = "XXXXXXXX50",
-                alt_mob_num = 9022120324,
+                alt_mob_num ="9022120324",  //"9022120324"
                 rta_id = 0
             };
 
@@ -82,6 +82,15 @@ namespace Evoting_Nunit_test
             };
 
         }
+        public static FJC_SharedHolder_Restrict scrutrestrict(string event_id)
+        {
+            return new  FJC_SharedHolder_Restrict()
+                {
+                event_id = Convert.ToInt32(event_id),
+                dpcl= "dpclscrutrestrict",
+                remark= "scrutrestrict"
+            };
+        }
 
         public async Task<dynamic> Post_Login(FJC_LoginRequest _fjc_login)
         {
@@ -93,7 +102,7 @@ namespace Evoting_Nunit_test
 
         public async Task<dynamic> Post_Registration(FJC_Registration fJC_Registration)
         {
-            var get_url1 = await CommanUrl.Registration().WithHeader("Token", token).PostJsonAsync(fJC_Registration).ReceiveString();
+            var get_url1 = await CommanUrl.Registration().PostJsonAsync(fJC_Registration).ReceiveString();
             return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         }
         
@@ -103,16 +112,16 @@ namespace Evoting_Nunit_test
             return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         }
 
-        public async Task<dynamic> Get_Docdownload()
+        public async Task<dynamic> Get_Docdownload(string token)
         {
             var get_url1 = await CommanUrl.DocUpload().WithHeader("Token", token).GetJsonAsync();
-            var message = get_url1.message;
+            var message = get_url1.statusCode;
             return get_url1;
         }
-        public async Task<dynamic> Post_Docdownload(string DownloadType)   //tri_partiate_agreement
+        public async Task<dynamic> Post_Docdownload(string DownloadType, string token)   //tri_partiate_agreement
         {
-            var get_url1 = await CommanUrl.DocDownload().WithHeader("Token", token).SetQueryParam("DownloadType", DownloadType).PostJsonAsync("");
-            var message = get_url1.ReasonPhrase.ToString();
+
+            var get_url1 = await CommanUrl.DocDownload().WithHeader("Token", token).SetQueryParam("DownloadType", DownloadType).PostJsonAsync("").ReceiveString();
             return get_url1;
         }
 
@@ -122,11 +131,12 @@ namespace Evoting_Nunit_test
             var message = get_url1.message;
             return get_url1;
         }
-        public async Task<dynamic> Post_DocUpload(FJC_DOC_Upload fJC_DOC_Upload)
+        public async Task<dynamic> Post_DocUpload(FJC_DOC_Upload fJC_DOC_Upload, string token)
         {
             var get_url1 = await CommanUrl.DocUpload().WithHeader("Token", token).PostJsonAsync(fJC_DOC_Upload).ReceiveString();
-            return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
+            return get_url1;
         }
+
         //////public async Task<dynamic> Put_Prifile(FJC_Registration fJC_Registration)
         //////{
         //////    var get_url1 = await CommanUrl.userprofile().WithHeader("Token", token).PutJsonAsync(fJC_Registration).ReceiveString();
@@ -139,7 +149,29 @@ namespace Evoting_Nunit_test
             return get_url1;
         }
 
+        public async Task<dynamic> Post_ScrutRestrict(FJC_SharedHolder_Restrict fJC_SharedHolder, string token)
+        {
+            var get_url1 = await CommanUrl.Restrictderestrict().WithHeader("Token", token).PostJsonAsync(fJC_SharedHolder).ReceiveString();
+            return get_url1;
+        }
+        public async Task<dynamic> Post_UnblockEvent(string event_id,string token)
+        {
+            var get_url1 = await CommanUrl.EventBlockUnblock().WithHeader("Token", token).PostJsonAsync(event_id).ReceiveString();
+            return get_url1;
+        }
 
+        public async Task<dynamic> Post_finalizeevent(string event_id, string token)
+        {
+            var get_url1 = await CommanUrl.finalizeevent().WithHeader("Token", token).PostJsonAsync(event_id).ReceiveString();
+            return get_url1;
+        }
 
+        public async Task<dynamic> Get_reportsgeneration(string event_id, string token)
+        {
+            var get_url1 = await CommanUrl.reportsgeneration().WithHeader("Token", token).SetQueryParam("event_id", event_id).GetJsonAsync();
+            var message = get_url1.message;
+            return get_url1;
+        }
+        
     }
 }

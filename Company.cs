@@ -113,14 +113,14 @@ namespace Evoting_Nunit_test
                 reg_city = "palghar",
                 reg_pincode = "401303",
                 reg_state_id = 4,
-                reg_country = 1,
+                reg_country_id = 1,
                 corres_add1 = "Mumbai",
                 corres_add2 = "vasai",
                 corres_add3 = "virar",
                 corres_city = "palghar",
                 corres_pincode = "401303",
                 corres_state_id = 6,
-                corres_country = 1,
+                corres_country_id = 1,
                 pcs_no = "000001",
                 cs_name = "Shivkumar",
                 cs_email_id = "shivkumar@bigshareonline.com",
@@ -129,7 +129,7 @@ namespace Evoting_Nunit_test
                 cs_fax_no = "23423",
                 cs_mobile_no = "1234567890",
                 panid = "XXXXXXXX10",
-                alt_mob_num = 9022120324,
+                alt_mob_num = "9022120324",
                 rta_id = 2
             };
 
@@ -139,7 +139,7 @@ namespace Evoting_Nunit_test
         {
             return new FJC_Registration()
             {
-              
+                aud_id = 0,
                 reg_type_id = 1,
                 name = "Testingcompany",
                 reg_no = "Lenovo123",
@@ -149,14 +149,14 @@ namespace Evoting_Nunit_test
                 reg_city = "Mumbai",
                 reg_pincode = "401001",
                 reg_state_id = 4,
-                reg_country = 1,
+                reg_country_id = 1,
                 corres_add1 = "Mumbai1",
                 corres_add2 = "Mumbai1",
                 corres_add3 = "Mumbai1",
                 corres_city = "Mumbai",
                 corres_pincode = "401002",
                 corres_state_id = 6,
-                corres_country = 1,
+                corres_country_id = 1,
                 pcs_no = "000001",
                 cs_name = "Shivkumar",
                 cs_email_id = "shivkumar@bigshareonline.com",
@@ -165,7 +165,7 @@ namespace Evoting_Nunit_test
                 cs_fax_no = "23423",
                 cs_mobile_no = "1234567890",
                 panid = "XXXXXXXX10",
-                alt_mob_num = 9022120324,
+                alt_mob_num = "9022120324",
                 rta_id = 2,
              
         };
@@ -262,7 +262,7 @@ namespace Evoting_Nunit_test
         public async Task<dynamic> Post_Rom_Upload(FJC_ROMUpload fJC_ROM, string token)
         {
             var get_url1 = await CommanUrl.ComRomUpload().WithHeader("Token", token).PostJsonAsync(fJC_ROM).ReceiveString();
-            return get_url1;
+            return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         }
        
         public async Task<dynamic> PostApproved_Event(string event_id,string token)
@@ -307,6 +307,7 @@ namespace Evoting_Nunit_test
         public async Task<dynamic> Post_Registration(FJC_Registration fJC_Registration)
         {
             var get_url1 = await CommanUrl.Registration().WithHeader("Token", token).PostJsonAsync(fJC_Registration).ReceiveString();
+           // return get_url1;
             return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         }
 
