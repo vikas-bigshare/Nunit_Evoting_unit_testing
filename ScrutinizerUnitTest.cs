@@ -49,8 +49,8 @@ namespace Evoting_Nunit_test
         }
 
 
-        [SetUp]
-        [Test, Order(1)]
+        //[SetUp]
+        //[Test, Order(1)]
         public async Task Test_ScrutRegistration()
         {
            
@@ -58,8 +58,8 @@ namespace Evoting_Nunit_test
             userid = check.data.UserID;
             // Assert.AreEqual("New Registration completed Successfully", check.data.Message);
         } 
-        [SetUp]
-        [Test, Order(2)]
+        //[SetUp]
+        //[Test, Order(2)]
         public async Task Test_ScrutLogin()
         {
             var check = await _objcom.Post_Login(Scrutinizer.Default_user(userid));
@@ -68,8 +68,8 @@ namespace Evoting_Nunit_test
             token = check.data.Token;
         }
 
-        [SetUp]
-        [Test, Order(3)]
+        //[SetUp]
+        //[Test, Order(3)]
         public async Task Test_postdownloadagreement()
         {
             var check = await _objcom.Post_Docdownload("tri_partiate_agreement", token);
@@ -81,8 +81,8 @@ namespace Evoting_Nunit_test
             // Assert.AreEqual(200, check.statusCode);
 
         }
-        [SetUp]
-        [Test, Order(4)]
+        //[SetUp]
+        //[Test, Order(4)]
         public async Task Test_uploadagreement()
         {
             var check = await _objcom.Post_DocUpload(Company.Docupload(docno), token);
@@ -92,8 +92,8 @@ namespace Evoting_Nunit_test
             // Assert.IsNotNull(check.Message);
             // Assert.AreEqual("User logged in succesfuly", check.Message);
         }
-        [SetUp]
-        [Test, Order(5)]
+        //[SetUp]
+        //[Test, Order(5)]
         public async Task Test_getdownloadagreement()
         {
             var check = await _objcom.Get_Docdownload(token);
@@ -101,8 +101,8 @@ namespace Evoting_Nunit_test
             // Assert.AreEqual(200, check.statusCode);
         }
 
-        [SetUp]
-        [Test, Order(6)]
+        //[SetUp]
+        //[Test, Order(6)]
         public async Task Test_PostScrutVotingRestrict()
         {
             var check = await _objcom.Post_ScrutRestrict(Scrutinizer.scrutrestrict(event_id),token);
@@ -112,8 +112,8 @@ namespace Evoting_Nunit_test
         }
 
 
-        [SetUp]
-        [Test, Order(7)]
+        //[SetUp]
+        //[Test, Order(7)]
         public async Task Post_UnblockEvent()
         {
             var check = await _objcom.Post_UnblockEvent(event_id, token);
@@ -122,8 +122,8 @@ namespace Evoting_Nunit_test
             string msg = jsonparsingcls1.message;
         }
 
-        [SetUp]
-        [Test, Order(8)]
+        //[SetUp]
+        //[Test, Order(8)]
         public async Task Post_finalizeevent()
         {
             var check = await _objcom.Post_finalizeevent(event_id, token);
@@ -132,8 +132,8 @@ namespace Evoting_Nunit_test
             string msg = jsonparsingcls1.message;
         }
 
-        [SetUp]
-        [Test, Order(9)]
+        //[SetUp]
+        //[Test, Order(9)]
         public async Task Get_reportsgeneration()
         {
             var check = await _objcom.Get_reportsgeneration(event_id, token);

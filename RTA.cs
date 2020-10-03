@@ -25,10 +25,8 @@ namespace Evoting_Nunit_test
             { UserID = userid, system_ip = "127.0.0.128", encrypt_Password = "bigshare@123" };
 
         }
-        public static FJC_UpdateEVENT Update_Event()
+        public static FJC_UpdateEVENT Update_Event(string EventId)
         {
-
-
             List<FJC_Resolutions_Data> resolutions_Datas = new List<FJC_Resolutions_Data>();
             resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = 65, resolution_id = 1, title = "title1", description = "description1" });
             resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = 66, resolution_id = 2, title = "title2", description = "description2" });
@@ -37,14 +35,7 @@ namespace Evoting_Nunit_test
 
             return new FJC_UpdateEVENT()
             {
-                event_id = 25,
-                //isin = "INE98765432",
-                //type_isin = 3,
-                //type_evoting = 1,
-                //total_nof_share = 100000,
-                //voting_rights = 1,
-                //cut_of_date = "2020-08-31",
-                //scrutinizer = 1,
+                event_id =Convert.ToInt32(EventId),
                 voting_start_datetime = "",
                 voting_end_datetime = "",
                 meeting_datetime = "",
@@ -53,8 +44,8 @@ namespace Evoting_Nunit_test
                 upload_logo = 1,
                 upload_resolution_file = 3,
                 upload_notice = 2,
-                enter_nof_resolution = 9,
-               // resolutions = resolutions_Datas.ToArray()
+                enter_nof_resolution = 4,
+                resolutions_Datas = resolutions_Datas.ToArray()
             };
 
         }
@@ -145,7 +136,7 @@ namespace Evoting_Nunit_test
             return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         }
 
-        public async Task<dynamic> Get_UpdateEven(int event_id)   //get error in result converting
+        public async Task<dynamic> Get_UpdateEven(string event_id)   
         {
             //var get_url1 = await CommanUrl.ComFileUpload().WithHeader("Token", token).PostJsonAsync(doc_id).ReceiveString();
             var get_url1 = await CommanUrl.updateEvent().WithHeader("Token", token).SetQueryParam("event_id", event_id).GetJsonAsync();
@@ -153,10 +144,10 @@ namespace Evoting_Nunit_test
             return get_url1;
         }
 
-        public async Task<dynamic> Put_UpdateEven(FJC_UpdateEVENT fJC_UpdateEVENT)   //get error in result converting
+        public async Task<dynamic> Put_UpdateEven(FJC_UpdateEVENT fJC_UpdateEVENT,string token)   
         {
             var get_url1 = await CommanUrl.updateEvent().WithHeader("Token", token).PutJsonAsync(fJC_UpdateEVENT).ReceiveString();
-            return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
+            return get_url1;
         }
 
         public async Task<dynamic> Post_FileUpload(string token)
@@ -233,7 +224,8 @@ namespace Evoting_Nunit_test
         public async Task<dynamic> Post_Registration(FJC_Registration fJC_Registration)
         {
             var get_url1 = await CommanUrl.Registration().WithHeader("Token", token).PostJsonAsync(fJC_Registration).ReceiveString();
-            return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
+           // return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
+            return get_url1;
         }
 
         //////public async Task<dynamic> GetRegistration(int aud_id)
@@ -274,8 +266,6 @@ namespace Evoting_Nunit_test
             var get_url1 = await CommanUrl.userprofile().WithHeader("Token", token).PutJsonAsync(fJC_Registration).ReceiveString();
             return get_url1;
         }
-
-      
 
         public async Task<dynamic> Get_Prifile(int aud_id)
         {

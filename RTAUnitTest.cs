@@ -43,7 +43,13 @@ namespace Evoting_Nunit_test
             public string event_id { get; set; }
             public string remark { get; set; }
             public int doc_id { get; set; }
+
+            public int aud_id { get; set; }
+            public string UserID { get; set; }
         }
+
+
+
         public class jsonparsingcls
         {
             public string statusCode { get; set; }
@@ -52,25 +58,29 @@ namespace Evoting_Nunit_test
 
         }
 
-        [SetUp]
-        [Test, Order(1)]
-        public async Task Test_RTARegistration()
+
+        //[SetUp]
+        //[Test, Order(1)]
+        public async Task<jsonparsingcls> Test_RTARegistration()
         {
             var check = await _objcom.Post_Registration(RTA.Registration());
-            userid = check.data.UserID;
+            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
+            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
+            return jsonparsingcls1;
+
             // Assert.AreEqual("New Registration completed Successfully", check.data.Message);
         }
-        [SetUp]
-        [Test, Order(2)]
-        public async Task Test_RTALogin()
+        //[SetUp]
+        //[Test, Order(2)]
+        public async Task Test_RTALogin(string RTAuserId)
         {
-            var check = await _objcom.Post_Login(RTA.Default_user(userid));
+            var check = await _objcom.Post_Login(RTA.Default_user(RTAuserId));
             //Assert.IsNotNull(check.Message);
             //Assert.AreEqual("User logged in succesfuly", check.Message);
             token = check.data.Token;
         }
-        [SetUp]
-        [Test, Order(3)]
+        //[SetUp]
+        //[Test, Order(3)]
         public async Task Test_postdownloadagreement()
         {
             var check = await _objcom.Post_Docdownload("tri_partiate_agreement", token);
@@ -82,8 +92,8 @@ namespace Evoting_Nunit_test
             // Assert.AreEqual(200, check.statusCode);
 
         }
-        [SetUp]
-        [Test, Order(4)]
+        //[SetUp]
+        //[Test, Order(4)]
         public async Task Test_uploadagreement()
         {
             var check = await _objcom.Post_DocUpload(Company.Docupload(docno), token);
@@ -93,8 +103,8 @@ namespace Evoting_Nunit_test
             // Assert.IsNotNull(check.Message);
             // Assert.AreEqual("User logged in succesfuly", check.Message);
         }
-        [SetUp]
-        [Test, Order(5)]
+        //[SetUp]
+        //[Test, Order(5)]
         public async Task Test_getdownloadagreement()
         {
             var check = await _objcom.Get_Docdownload(token);
@@ -102,18 +112,18 @@ namespace Evoting_Nunit_test
             // Assert.AreEqual(200, check.statusCode);
         }
        
-        [SetUp]
-        [Test, Order(6)]
+        //[SetUp]
+        //[Test, Order(6)]
         public async Task Test_Geteventlistcurrent()
         {
             var check = await _objcom.Get_EventList("past", token);
             Assert.AreEqual(200, check.statusCode);
         }
-        [SetUp]
-        [Test, Order(7)]
+        //[SetUp]
+        //[Test, Order(7)]
         public async Task Test_Putgenerateevent()
         {
-            var check = await _objcom.Put_Prifile(RTA.Registration(),token);
+            var check = await _objcom.Put_UpdateEven(RTA.Update_Event(event_id),token);
             jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
             jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
             string msg = jsonparsingcls1.message;
@@ -129,8 +139,8 @@ namespace Evoting_Nunit_test
         //}
       
 
-        [SetUp]
-        [Test, Order(8)]
+        //[SetUp]
+        //[Test, Order(8)]
         public void romuploadfile_eventid_change()
         {
             //string event_id = "157";
@@ -159,8 +169,8 @@ namespace Evoting_Nunit_test
             }
            
         }
-        [SetUp]
-        [Test, Order(9)]
+        //[SetUp]
+        //[Test, Order(9)]
         public async Task Test_PostNewgeneratedFileUpload()
         {
             var check = await _objcom.Post_FileUploadnew(token, fileLocMove);
@@ -168,26 +178,26 @@ namespace Evoting_Nunit_test
             jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
             filedocid = jsonparsingcls1.Data.doc_id;
         }
-        [SetUp]
-        [Test, Order(10)]
+        //[SetUp]
+        //[Test, Order(10)]
         public async Task Test_postROMupload()
         {
 
             var check = await _objcom.Post_Rom_Upload(RTA.romupload(event_id, filedocid), token);
             string msg = check.message;
         }
-        [SetUp]
-        [Test, Order(11)]
+        //[SetUp]
+        //[Test, Order(11)]
         public async Task Test_postApprovedEvent()
         {
-            string event_id = "157";
+           // string event_id = "157";
             var check = await _objcom.PostApproved_Event(event_id, token);
             jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
             jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
             string msg = jsonparsingcls1.Data.remark;
         }
-        [SetUp]
-        [Test, Order(12)]
+        //[SetUp]
+        //[Test, Order(12)]
         public async Task Test_Geteventlistapproved()
         {
             var check = await _objcom.Get_EventList("approved", token);

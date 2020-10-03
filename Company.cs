@@ -99,7 +99,7 @@ namespace Evoting_Nunit_test
                 PAN_ID = "XXXXXXXXXX"
             };
         }
-        public static FJC_Registration Registration()
+        public static FJC_Registration Registration(int rtaAudid)
         {
             return new FJC_Registration()
             {
@@ -130,7 +130,7 @@ namespace Evoting_Nunit_test
                 cs_mobile_no = "1234567890",
                 panid = "XXXXXXXX10",
                 alt_mob_num = "9022120324",
-                rta_id = 2
+                rta_id = rtaAudid
             };
 
         }
@@ -166,7 +166,7 @@ namespace Evoting_Nunit_test
                 cs_mobile_no = "1234567890",
                 panid = "XXXXXXXX10",
                 alt_mob_num = "9022120324",
-                rta_id = 2,
+                rta_id = 15,
              
         };
 

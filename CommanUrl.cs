@@ -14,7 +14,8 @@ namespace Evoting_Nunit_test
 
     public static class CommanUrl
     {
-       //const string DefaultUrl = "http://bigshareonline.com:6001";
+       //const string DefaultUrl = "https://evoting.bigshareonline.com:6001";
+        //const string DefaultUrl = "http://bigshareonline.com:6001";
         const string DefaultUrl = "http://localhost:6000";
 
         //////////////////////////////////////////////////////company/////////////////////////////////////////////
@@ -105,12 +106,12 @@ namespace Evoting_Nunit_test
 
         public static string updateEvent()
         {
-            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("EVENTDetails");
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("EVENTDetails"); 
             return _ComEvntDe;
         }
         public static string Restrictderestrict()
         {
-            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("shareholder");
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("shareholder").AppendPathSegment("restrict"); 
             return _ComEvntDe;
         }
         public static string EventBlockUnblock()
