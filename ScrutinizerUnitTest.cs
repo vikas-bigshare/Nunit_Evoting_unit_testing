@@ -17,20 +17,21 @@ using Microsoft.AspNetCore.Http.Internal;
 
 namespace Evoting_Nunit_test
 {
-    [TestFixture]
+   //[TestFixture]
    public class ScrutinizerUnitTest
     {
         public ScrutinizerUnitTest(string event_ids)
         {
             this.event_id = event_ids;
         }
-
+        
         Scrutinizer _objcom = new Scrutinizer();
         public string token { get; set; }
         public string userid { get; set; }
         public string event_id { get; set; }
         public int docno { get; set; }
-       
+        public int rowid { get; set; }
+        
         public int filedocid { get; set; }
         public string fileLocMove { get; set; }
         public class data
@@ -39,6 +40,9 @@ namespace Evoting_Nunit_test
             public string event_id { get; set; }
             public string remark { get; set; }
             public int doc_id { get; set; }
+            public int rowid { get; set; }
+
+            public string UserID { get; set; }
         }
         public class jsonparsingcls
         {
@@ -51,18 +55,20 @@ namespace Evoting_Nunit_test
 
         //[SetUp]
         //[Test, Order(1)]
-        public async Task Test_ScrutRegistration()
+        public async Task<jsonparsingcls> Test_ScrutRegistration()
         {
            
             var check = await _objcom.Post_Registration(Scrutinizer.Registration());
-            userid = check.data.UserID;
+            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
+            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
+            return jsonparsingcls1;
             // Assert.AreEqual("New Registration completed Successfully", check.data.Message);
         } 
         //[SetUp]
         //[Test, Order(2)]
-        public async Task Test_ScrutLogin()
+        public async Task Test_ScrutLogin(string scrut_UserId)
         {
-            var check = await _objcom.Post_Login(Scrutinizer.Default_user(userid));
+            var check = await _objcom.Post_Login(Scrutinizer.Default_user(scrut_UserId));
             //Assert.IsNotNull(check.Message);
             //Assert.AreEqual("User logged in succesfuly", check.Message);
             token = check.data.Token;

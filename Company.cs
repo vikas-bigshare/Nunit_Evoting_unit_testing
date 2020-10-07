@@ -28,7 +28,7 @@ namespace Evoting_Nunit_test
             { UserID = userid, system_ip = "127.0.0.128", encrypt_Password = "bigshare@123" };
 
         }
-        public static FJC_GenerateEVENT generate_event()
+        public static FJC_GenerateEVENT generate_event(int scrut_rowid)
         {
             return new FJC_GenerateEVENT()
             {
@@ -39,11 +39,11 @@ namespace Evoting_Nunit_test
                 total_nof_share = 10000,
                 voting_rights = 1,
                 cut_of_date = "2020-08-30",
-                scrutinizer = 9093
+                scrutinizer = scrut_rowid
             };
 
         }
-        public static FJC_CompanyUpdate_Event Com_event_detail(string event_id)
+        public static FJC_CompanyUpdate_Event Com_event_detail(string event_id, int scrut_rowid)  //=39370
         {
             List<FJC_Resolutions_Data> resolutions_Datas = new List<FJC_Resolutions_Data>();
             resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = 65, resolution_id = 1, title = "title1", description = "description1" });
@@ -59,7 +59,7 @@ namespace Evoting_Nunit_test
                 total_nof_share = 100000,
                 voting_rights = 1,
                 cut_of_date = "2020-08-31",
-                scrutinizer = 1,
+                scrutinizer = scrut_rowid,
                 voting_start_datetime = "",
                 voting_end_datetime = "",
                 meeting_datetime = "",

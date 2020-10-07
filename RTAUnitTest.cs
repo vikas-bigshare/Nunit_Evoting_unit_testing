@@ -19,11 +19,11 @@ using static Evoting_Nunit_test.CompanyUnitTest;
 
 namespace Evoting_Nunit_test
 {
-    [TestFixture]
+    //[TestFixture]
   public  class RTAUnitTest
     {
-
-       public RTAUnitTest(string event_ids)
+       
+        public RTAUnitTest(string event_ids)
         {
             this.event_id = event_ids;
         }
@@ -66,8 +66,9 @@ namespace Evoting_Nunit_test
             var check = await _objcom.Post_Registration(RTA.Registration());
             jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
             jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
+           
             return jsonparsingcls1;
-
+          
             // Assert.AreEqual("New Registration completed Successfully", check.data.Message);
         }
         //[SetUp]
@@ -130,14 +131,14 @@ namespace Evoting_Nunit_test
         }
         //[SetUp]
         //[Test, Order(8)]
-        //public async Task Test_PostFileUpload()
-        //{
-        //    var check = await _objcom.Post_FileUpload(token);
-        //    jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-        //    jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-        //    filedocid = jsonparsingcls1.Data.doc_id;
-        //}
-      
+        public async Task Test_PostFileUpload()
+        {
+            var check = await _objcom.Post_FileUpload(token);
+            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
+            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
+            filedocid = jsonparsingcls1.Data.doc_id;
+        }
+
 
         //[SetUp]
         //[Test, Order(8)]

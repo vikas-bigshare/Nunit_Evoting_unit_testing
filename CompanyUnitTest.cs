@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Http.Internal;
+using System.Threading;
+
 
 
 
@@ -26,9 +28,10 @@ namespace Evoting_Nunit_test
        
         public string token { get; set; }
         public string userid { get; set; }
-
         public string RTAUserId { get; set; }
         public int RTAAudId { get; set; }
+        public string scrut_UserId { get; set; }
+        public int scrut_rowid{ get; set; }
         public int docno { get; set; }
         public string event_id { get; set; }
         public int filedocid { get; set; }
@@ -39,6 +42,7 @@ namespace Evoting_Nunit_test
             public string event_id { get; set; }
             public string remark { get; set; }
             public int doc_id { get; set; }
+            public int rowid { get; set; }
 
             public int aud_id { get; set; }
             public string UserID { get; set; }
@@ -51,29 +55,40 @@ namespace Evoting_Nunit_test
 
         }
 
-        [SetUp]
-        [Test, Order(1)]
+
+
+
+        //[SetUp]
+        //[Test, Order(1)]
+
         public async Task callRTA()
         {
-            RTAUnitTest rTAUnitTest = new RTAUnitTest(event_id);
-            var rvalue = await rTAUnitTest.Test_RTARegistration();
+            RTAUnitTest rTAUnitTestr = new RTAUnitTest(event_id);
+            var rvalue = await rTAUnitTestr.Test_RTARegistration();
             RTAUserId = rvalue.Data.UserID;
             RTAAudId = rvalue.Data.aud_id;
+
         }
-
-
-
-
-        [SetUp]
-        [Test, Order(2)]
+        //[SetUp]
+        //[Test, Order(2)]
+        public async Task callScrutinizer()
+        {
+            ScrutinizerUnitTest scrutinizerUnits = new ScrutinizerUnitTest(event_id);
+            var rvalue = await scrutinizerUnits.Test_ScrutRegistration();
+            scrut_UserId = rvalue.Data.UserID;
+            scrut_rowid = rvalue.Data.rowid;
+        }
+        //[SetUp]
+        //[Test, Order(3)]
         public async Task Test_CompanyRegistration()
         {
             var check = await _objcom.Post_Registration(Company.Registration(RTAAudId));
             userid = check.data.UserID;
             // Assert.AreEqual("New Registration completed Successfully", check.data.Message);
         } //after login, each method will first initialise company class and assign token to it. 
-        [SetUp]
-        [Test, Order(3)]
+
+        //[SetUp]
+        //[Test, Order(4)]
         public async Task Test_CompanyLogin()
         {
             var check = await _objcom.Post_Login(Company.Default_user(userid));
@@ -81,8 +96,8 @@ namespace Evoting_Nunit_test
             //Assert.AreEqual("User logged in succesfuly", check.Message);
             token = check.data.Token;
         }
-        [SetUp]
-        [Test, Order(4)]
+        //[SetUp]
+        //[Test, Order(5)]
         public async Task Test_postdownloadagreement()
         {
             var check = await _objcom.Post_Docdownload("tri_partiate_agreement", token);
@@ -94,8 +109,8 @@ namespace Evoting_Nunit_test
             // Assert.AreEqual(200, check.statusCode);
 
         }
-        [SetUp]
-        [Test, Order(5)]
+        //[SetUp]
+        //[Test, Order(6)]
         public async Task Test_uploadagreement()
         {
             var check = await _objcom.Post_DocUpload(Company.Docupload(docno), token);
@@ -105,35 +120,35 @@ namespace Evoting_Nunit_test
             // Assert.IsNotNull(check.Message);
             // Assert.AreEqual("User logged in succesfuly", check.Message);
         }
-        [SetUp]
-        [Test, Order(6)]
+        //[SetUp]
+        //[Test, Order(7)]
         public async Task Test_getdownloadagreement()
         {
             var check = await _objcom.Get_Docdownload(token);
             //Assert.IsNotNull(check.Message);
             // Assert.AreEqual(200, check.statusCode);
         }
-        [SetUp]
-        [Test, Order(7)]
+        //[SetUp]
+        //[Test, Order(8)]
         public async Task Test_Postgenerateevent()
         {
-            var check = await _objcom.Post_GenerateEvent(Company.generate_event(), token);
+            var check = await _objcom.Post_GenerateEvent(Company.generate_event(scrut_rowid), token);
             jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
             jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
             event_id = jsonparsingcls1.Data.event_id;
         }
-        [SetUp]
-        [Test, Order(8)]
+        //[SetUp]
+        //[Test, Order(9)]
         public async Task Test_Geteventlistcurrent()
         {
             var check = await _objcom.Get_EventList("current", token);
             string msg = check.message;
         }
-        [SetUp]
-        [Test, Order(9)]
+        //[SetUp]
+        //[Test, Order(10)]
         public async Task Test_Putgenerateevent()
         {
-            var check = await _objcom.Put_Company_Eventdetails(Company.Com_event_detail(event_id), token);
+            var check = await _objcom.Put_Company_Eventdetails(Company.Com_event_detail(event_id, scrut_rowid), token);
             jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
             jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
             string msg = jsonparsingcls1.message;
@@ -148,8 +163,8 @@ namespace Evoting_Nunit_test
         //    filedocid = jsonparsingcls1.Data.doc_id;
         //}
 
-        [SetUp]
-        [Test, Order(10)]
+        //[SetUp]
+        //[Test, Order(11)]
         public void romuploadfile_eventid_change()
         {
             
@@ -181,8 +196,8 @@ namespace Evoting_Nunit_test
 
             }
         }
-        [SetUp]
-        [Test, Order(11)]
+        //[SetUp]
+        //[Test, Order(12)]
         public async Task Test_PostNewgeneratedFileUpload()
         {
             var check = await _objcom.Post_FileUploadnew(token, fileLocMove);
@@ -191,16 +206,16 @@ namespace Evoting_Nunit_test
             filedocid = jsonparsingcls1.Data.doc_id;
         }
 
-        [SetUp]
-        [Test, Order(12)]
+        //[SetUp]
+        //[Test, Order(13)]
         public async Task Test_postROMupload()
         {
             var check = await _objcom.Post_Rom_Upload(Company.romupload(event_id, filedocid), token);
              string msg = check.message;
         }
 
-        [SetUp]
-        [Test, Order(13)]
+        //[SetUp]
+        //[Test, Order(14)]
         public async Task Test_postApprovedEvent()
         {
             var check = await _objcom.PostApproved_Event(event_id, token);
@@ -208,22 +223,23 @@ namespace Evoting_Nunit_test
             jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
             string msg = jsonparsingcls1.Data.remark;
         }
-        [SetUp]
-        [Test, Order(14)]
-        public async Task Test_Geteventlistapproved()
-        {
-            var check = await _objcom.Get_EventList("approved", token);
-            Assert.AreEqual(200, check.statusCode);
-            //jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-            //jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-            //string msg = jsonparsingcls1.message;
-        }
+        //[SetUp]
+        //[Test, Order(15)]
+        //public async Task Test_Geteventlistapproved()
+        //{
+        //    var check = await _objcom.Get_EventList("approved", token);
+        //    Assert.AreEqual(200, check.statusCode);
+        //    jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
+        //    jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
+        //    string msg = jsonparsingcls1.message;
+        //}
 
-        [SetUp]
-        [Test, Order(15)]
-        public async Task callRTA2()
+        //[SetUp]
+        //[Test, Order(16)]
+        public async Task callRTAsecond()
         {
             RTAUnitTest rTAUnitTest = new RTAUnitTest(event_id);
+
             // await rTAUnitTest.Test_RTARegistration();
             await rTAUnitTest.Test_RTALogin(RTAUserId);
             await rTAUnitTest.Test_postdownloadagreement();
@@ -234,17 +250,17 @@ namespace Evoting_Nunit_test
             rTAUnitTest.romuploadfile_eventid_change();
             await rTAUnitTest.Test_PostNewgeneratedFileUpload();
             await rTAUnitTest.Test_postROMupload();
-            //await rTAUnitTest.Test_PostFileUpload(); 
+            await rTAUnitTest.Test_PostFileUpload(); 
             await rTAUnitTest.Test_postApprovedEvent();
             await rTAUnitTest.Test_Geteventlistapproved();
         }
-        [SetUp]
-        [Test, Order(16)]
-        public async Task callScrutinizer()
+        //[SetUp]
+        //[Test, Order(17)]
+        public async Task callScrutinizersecond()
         {
             ScrutinizerUnitTest scrutinizerUnit = new ScrutinizerUnitTest(event_id);
-            await scrutinizerUnit.Test_ScrutRegistration();
-            await scrutinizerUnit.Test_ScrutLogin();
+            // await scrutinizerUnit.Test_ScrutRegistration();
+            await scrutinizerUnit.Test_ScrutLogin(scrut_UserId);
             await scrutinizerUnit.Test_postdownloadagreement();
             await scrutinizerUnit.Test_uploadagreement();
             await scrutinizerUnit.Test_getdownloadagreement();
@@ -254,12 +270,19 @@ namespace Evoting_Nunit_test
             await scrutinizerUnit.Get_reportsgeneration();
         }
         //[SetUp]
-        //[Test, Order(17)]
-        //public async Task callInvestor()
-        //{
-        //InvestorUnitTest investorUnit = new InvestorUnitTest(event_id);
-        //await investorUnit.Test_InvestorLogin();
-        //await investorUnit.Post_InvestorVoting();
-        // }
+        //[Test, Order(18)]
+        public async Task callInvestor()
+        {
+            InvestorUnitTest investorUnit = new InvestorUnitTest(event_id);
+            await investorUnit.Test_InvestorLogin();
+            await investorUnit.Post_InvestorVoting();
+        }
+
+        public async Task callCustodion()
+        {
+            CustodianUnitTest ObjCusto = new CustodianUnitTest(event_id);
+            await ObjCusto.Test_RTARegistration();
+            await ObjCusto.Test_RTALogin();
+        }
     }
 }

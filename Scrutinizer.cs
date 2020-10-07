@@ -103,7 +103,7 @@ namespace Evoting_Nunit_test
         public async Task<dynamic> Post_Registration(FJC_Registration fJC_Registration)
         {
             var get_url1 = await CommanUrl.Registration().PostJsonAsync(fJC_Registration).ReceiveString();
-            return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
+            return get_url1;
         }
         
         public async Task<dynamic> Post_ChangePasssword(FJC_ChangePassword fJC_ChangePassword)
@@ -148,7 +148,6 @@ namespace Evoting_Nunit_test
             var message = get_url1.message;
             return get_url1;
         }
-
         public async Task<dynamic> Post_ScrutRestrict(FJC_SharedHolder_Restrict fJC_SharedHolder, string token)
         {
             var get_url1 = await CommanUrl.Restrictderestrict().WithHeader("Token", token).PostJsonAsync(fJC_SharedHolder).ReceiveString();
@@ -156,20 +155,23 @@ namespace Evoting_Nunit_test
         }
         public async Task<dynamic> Post_UnblockEvent(string event_id,string token)
         {
-            var get_url1 = await CommanUrl.EventBlockUnblock().WithHeader("Token", token).PostJsonAsync(event_id).ReceiveString();
+            //var get_url1 = await CommanUrl.EventBlockUnblock().WithHeader("Token", token).PostJsonAsync(event_id).ReceiveString();
+            var get_url1 = await CommanUrl.EventBlockUnblock().WithHeader("Token", token).SetQueryParam("event_id", event_id).PostJsonAsync("").ReceiveString();
+
             return get_url1;
         }
 
         public async Task<dynamic> Post_finalizeevent(string event_id, string token)
         {
-            var get_url1 = await CommanUrl.finalizeevent().WithHeader("Token", token).PostJsonAsync(event_id).ReceiveString();
+            //var get_url1 = await CommanUrl.finalizeevent().WithHeader("Token", token).PostJsonAsync(event_id).ReceiveString();
+            var get_url1 = await CommanUrl.finalizeevent().WithHeader("Token", token).SetQueryParam("event_id", event_id).PostJsonAsync("").ReceiveString();
             return get_url1;
         }
 
         public async Task<dynamic> Get_reportsgeneration(string event_id, string token)
         {
-            var get_url1 = await CommanUrl.reportsgeneration().WithHeader("Token", token).SetQueryParam("event_id", event_id).GetJsonAsync();
-            var message = get_url1.message;
+            var get_url1 = await CommanUrl.reportsgeneration().WithHeader("Token", token).SetQueryParam("event_id", event_id).PostJsonAsync("").ReceiveString();
+          //var message = get_url1.message;
             return get_url1;
         }
         

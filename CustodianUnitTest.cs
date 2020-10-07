@@ -14,21 +14,24 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Http.Internal;
+using Evoting_Nunit_test;
+using static Evoting_Nunit_test.CompanyUnitTest;
 
 namespace Evoting_Nunit_test
 {
-  public  class InvestorUnitTest
+ public   class CustodianUnitTest
     {
-        public InvestorUnitTest(string event_ids)
+        public CustodianUnitTest(string event_ids)
         {
             this.event_id = event_ids;
         }
-        Investor _objcom = new Investor();
+
+        Custodian _objcom = new Custodian();
+
         public string token { get; set; }
         public string userid { get; set; }
-        public string event_id { get; set; }
         public int docno { get; set; }
-
+        public string event_id { get; set; }
         public int filedocid { get; set; }
         public string fileLocMove { get; set; }
         public class data
@@ -37,7 +40,11 @@ namespace Evoting_Nunit_test
             public string event_id { get; set; }
             public string remark { get; set; }
             public int doc_id { get; set; }
+
+            public int aud_id { get; set; }
+            public string UserID { get; set; }
         }
+
         public class jsonparsingcls
         {
             public string statusCode { get; set; }
@@ -46,24 +53,23 @@ namespace Evoting_Nunit_test
 
         }
 
-        //[SetUp]
-        //[Test, Order(1)]
-        public async Task Test_InvestorLogin()
+        public async Task<jsonparsingcls> Test_RTARegistration()
         {
-            var check = await _objcom.Post_Login(Investor.Default_user());
+            var check = await _objcom.Post_Registration(Custodian.Registration());
+            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
+            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
+            return jsonparsingcls1;
+
+        }
+       
+        public async Task Test_RTALogin()
+        {
+            var check = await _objcom.Post_Login(Custodian.Default_user());
             //Assert.IsNotNull(check.Message);
             //Assert.AreEqual("User logged in succesfuly", check.Message);
             token = check.data.Token;
         }
 
-        //[SetUp]
-        //[Test, Order(2)]
-        public async Task Post_InvestorVoting()
-        {
-            var check = await _objcom.PostInvestorVote(Investor.VoteInvestore(event_id), token);
-            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-            string msg = jsonparsingcls1.message;
-        }
+
     }
 }
