@@ -49,8 +49,8 @@ namespace Evoting_Nunit_test
             public data Data { get; set; }
 
         }
-        
-        [Test, Order(1)]
+
+        [Test, Order(2)]
         public async Task CheckFlow()
         {
             CompanyUnitTest company = new CompanyUnitTest();
@@ -71,9 +71,16 @@ namespace Evoting_Nunit_test
             await company.callRTAsecond();
             await company.callScrutinizersecond();
             await company.callInvestor();
+            await company.callCustRegistration();
             await company.callCustodion();
         }
 
+        //[Test, Order(1)]
+        //public async Task AddOfFlow()
+        //{
+        //    CompanyUnitTest company = new CompanyUnitTest();
+        //    await company.callInvestor();
+        //}
     }
 }
 

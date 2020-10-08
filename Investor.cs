@@ -63,9 +63,10 @@ namespace Evoting_Nunit_test
         public async Task<dynamic> Post_Login(FJC_LoginRequest _fjc_login)
         {
             var get_url1 = await CommanUrl.Login().PostJsonAsync(_fjc_login).ReceiveString();
-            dynamic _obj = JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
-            token = _obj.data.Token;
-            return _obj;
+            //dynamic _obj = JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
+            //token = _obj.data.Token;
+            //return _obj;
+          return   get_url1;
         }
         public async Task<dynamic> PostInvestorVote(FJC_Vote_Investor fJC_Vote_Investor,string token)//reset password
         {

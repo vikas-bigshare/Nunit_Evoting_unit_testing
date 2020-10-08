@@ -40,14 +40,14 @@ namespace Evoting_Nunit_test
                 reg_city = "Kalyan",
                 reg_pincode = "401001",
                 reg_state_id = 4,
-                reg_country_id = 1,  //reg_country_id
+                reg_country_id = 1,  
                 corres_add1 = "Bigshare Services,1st Floor, Bharat Tin Work ,Makawana Road",
                 corres_add2 = "Marol",
                 corres_add3 = "Andheri East",
                 corres_city = "Mumbai",
                 corres_pincode = "421003",
                 corres_state_id = 4,   
-                corres_country_id = 1,  //corres_country_id
+                corres_country_id = 1,  
                 pcs_no = "000001",
                 cs_name = "Shivkumar",
                 cs_email_id = "admin@fortunekit.com",
@@ -56,7 +56,7 @@ namespace Evoting_Nunit_test
                 cs_fax_no = "62699990",
                 cs_mobile_no = "1234567890",
                 panid = "XXXXXXXX50",
-                alt_mob_num ="9022120324",  //"9022120324"
+                alt_mob_num ="9022120324",  
                 rta_id = 0
             };
 
@@ -118,9 +118,8 @@ namespace Evoting_Nunit_test
             var message = get_url1.statusCode;
             return get_url1;
         }
-        public async Task<dynamic> Post_Docdownload(string DownloadType, string token)   //tri_partiate_agreement
+        public async Task<dynamic> Post_Docdownload(string DownloadType, string token)   
         {
-
             var get_url1 = await CommanUrl.DocDownload().WithHeader("Token", token).SetQueryParam("DownloadType", DownloadType).PostJsonAsync("").ReceiveString();
             return get_url1;
         }
@@ -155,15 +154,12 @@ namespace Evoting_Nunit_test
         }
         public async Task<dynamic> Post_UnblockEvent(string event_id,string token)
         {
-            //var get_url1 = await CommanUrl.EventBlockUnblock().WithHeader("Token", token).PostJsonAsync(event_id).ReceiveString();
             var get_url1 = await CommanUrl.EventBlockUnblock().WithHeader("Token", token).SetQueryParam("event_id", event_id).PostJsonAsync("").ReceiveString();
-
             return get_url1;
         }
 
         public async Task<dynamic> Post_finalizeevent(string event_id, string token)
         {
-            //var get_url1 = await CommanUrl.finalizeevent().WithHeader("Token", token).PostJsonAsync(event_id).ReceiveString();
             var get_url1 = await CommanUrl.finalizeevent().WithHeader("Token", token).SetQueryParam("event_id", event_id).PostJsonAsync("").ReceiveString();
             return get_url1;
         }
@@ -171,7 +167,6 @@ namespace Evoting_Nunit_test
         public async Task<dynamic> Get_reportsgeneration(string event_id, string token)
         {
             var get_url1 = await CommanUrl.reportsgeneration().WithHeader("Token", token).SetQueryParam("event_id", event_id).PostJsonAsync("").ReceiveString();
-          //var message = get_url1.message;
             return get_url1;
         }
         

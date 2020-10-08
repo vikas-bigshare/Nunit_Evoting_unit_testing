@@ -34,40 +34,17 @@ namespace Evoting_Nunit_test
         public string event_id { get; set; }
         public int filedocid { get; set; }
         public string fileLocMove { get; set; }
-        public class data
-        {
-            public int doc_no { get; set; }
-            public string event_id { get; set; }
-            public string remark { get; set; }
-            public int doc_id { get; set; }
-
-            public int aud_id { get; set; }
-            public string UserID { get; set; }
-        }
-
-        public class jsonparsingcls
-        {
-            public string statusCode { get; set; }
-            public string message { get; set; }
-            public data Data { get; set; }
-
-        }
-
-        public async Task<jsonparsingcls> Test_RTARegistration()
+      
+        public async Task<Custodian_Module.Custodian_Registration.Root> Test_CustodianRegistration()
         {
             var check = await _objcom.Post_Registration(Custodian.Registration());
-            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-            return jsonparsingcls1;
-
+            return JsonConvert.DeserializeObject<Custodian_Module.Custodian_Registration.Root>(check); 
         }
-       
-        public async Task Test_RTALogin()
+        public async Task Test_CustodianLogin(string Cust_UserId)
         {
-            var check = await _objcom.Post_Login(Custodian.Default_user());
-            //Assert.IsNotNull(check.Message);
-            //Assert.AreEqual("User logged in succesfuly", check.Message);
-            token = check.data.Token;
+            var check = await _objcom.Post_Login(Custodian.Default_user(Cust_UserId));
+            Custodian_Module.Custodian_Login.Root someval = JsonConvert.DeserializeObject<Custodian_Module.Custodian_Login.Root>(check);
+            token = someval.data.Token;
         }
 
 

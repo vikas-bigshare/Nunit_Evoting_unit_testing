@@ -18,10 +18,10 @@ namespace Evoting_Nunit_test
   public  class Custodian
     {
         public string token { get; set; }
-        public static FJC_LoginRequest Default_user()
+        public static FJC_LoginRequest Default_user(string Cust_UserId)
         {
             return new FJC_LoginRequest()
-            { UserID = "T400000000000002", system_ip = "127.0.0.1", encrypt_Password = "bigshare@123" };
+            { UserID = Cust_UserId, system_ip = "127.0.0.1", encrypt_Password = "bigshare@123" };
 
         }
 
@@ -63,15 +63,12 @@ namespace Evoting_Nunit_test
         public async Task<dynamic> Post_Login(FJC_LoginRequest _fjc_login)
         {
             var get_url1 = await CommanUrl.Login().PostJsonAsync(_fjc_login).ReceiveString();
-            dynamic _obj = JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
-            token = _obj.data.Token;
-            return _obj;
+            return get_url1;
         }
         public async Task<dynamic> Post_Registration(FJC_Registration fJC_Registration)
         {
             var get_url1 = await CommanUrl.Registration().WithHeader("Token", token).PostJsonAsync(fJC_Registration).ReceiveString();
-            // return get_url1;
-            return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
+             return get_url1;
         }
     }
 }

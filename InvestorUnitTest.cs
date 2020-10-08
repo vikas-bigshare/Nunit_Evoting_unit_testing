@@ -28,42 +28,21 @@ namespace Evoting_Nunit_test
         public string userid { get; set; }
         public string event_id { get; set; }
         public int docno { get; set; }
-
         public int filedocid { get; set; }
         public string fileLocMove { get; set; }
-        public class data
-        {
-            public int doc_no { get; set; }
-            public string event_id { get; set; }
-            public string remark { get; set; }
-            public int doc_id { get; set; }
-        }
-        public class jsonparsingcls
-        {
-            public string statusCode { get; set; }
-            public string message { get; set; }
-            public data Data { get; set; }
-
-        }
-
-        //[SetUp]
-        //[Test, Order(1)]
+        
         public async Task Test_InvestorLogin()
         {
             var check = await _objcom.Post_Login(Investor.Default_user());
-            //Assert.IsNotNull(check.Message);
-            //Assert.AreEqual("User logged in succesfuly", check.Message);
-            token = check.data.Token;
+            Investor_Modules.Investor_Login.Root someval = JsonConvert.DeserializeObject<Investor_Modules.Investor_Login.Root>(check);
+            token = someval.data.Token;
+            Assert.AreEqual("User logged in succesfuly", someval.message);
         }
-
-        //[SetUp]
-        //[Test, Order(2)]
         public async Task Post_InvestorVoting()
         {
             var check = await _objcom.PostInvestorVote(Investor.VoteInvestore(event_id), token);
-            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-            string msg = jsonparsingcls1.message;
+            Investor_Modules.Investorvote.Root someval = JsonConvert.DeserializeObject<Investor_Modules.Investorvote.Root>(check);
+            Assert.IsNotNull(someval.data.REMARK);
         }
     }
 }
