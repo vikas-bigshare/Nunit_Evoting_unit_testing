@@ -14,8 +14,9 @@ namespace Evoting_Nunit_test
 
     public static class CommanUrl
     {
-         const string DefaultUrl = "http://evoting.bigshareonline.com";
+        //const string DefaultUrl = "http://evoting.bigshareonline.com";
         //const string DefaultUrl = "https://evoting.bigshareonline.com:6001";
+        const string DefaultUrl = "https://evoting.bigshareonline.com";
         //const string DefaultUrl = "http://bigshareonline.com:6001";
         //const string DefaultUrl = "http://localhost:6000";
 
@@ -103,8 +104,6 @@ namespace Evoting_Nunit_test
             return _ComEvntDe;
         }
 
-        ////////////////////////////////////////////////////////////////////RTA/////////////////////////////
-
         public static string updateEvent()
         {
             var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("EVENTDetails"); 
@@ -142,6 +141,10 @@ namespace Evoting_Nunit_test
             return _ComEvntDe;
         }
 
-
+        public static string CustodianVotfileupload()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("cust-ROM");
+            return _ComEvntDe;
+        }
     }
 }

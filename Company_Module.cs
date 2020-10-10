@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Evoting_Nunit_test
 {
- public  class Custodian_Module
+ public   class Company_Module
     {
-        public class Custodian_Login
+        public class Company_Login
         {
             public class Data
             {
@@ -24,7 +24,7 @@ namespace Evoting_Nunit_test
             }
         }
 
-        public class Custodian_Registration
+        public class Company_Registration
         {
             public class Data
             {
@@ -42,30 +42,14 @@ namespace Evoting_Nunit_test
 
         }
 
-        public class Cust_FileUpload
+        public class Company_GenerateEvent
         {
             public class Data
             {
-                public int doc_id { get; set; }
-                public string file_name { get; set; }
-                public string url { get; set; }
-                public int uploadedby { get; set; }
-                public string name { get; set; }
-            }
-
-            public class Root
-            {
-                public int statusCode { get; set; }
-                public string message { get; set; }
-                public Data data { get; set; }
-            }
-        }
-
-        public class Cust_POAUpload
-        {
-            public class Data
-            {
-                public string remark { get; set; }
+                public int Event_Id { get; set; }
+                public string ISIN { get; set; }
+                public string NAME { get; set; }
+                public string ScrutinizerName { get; set; }
             }
 
             public class Root
@@ -76,7 +60,4 @@ namespace Evoting_Nunit_test
             }
         }
     }
-
-
-    
 }

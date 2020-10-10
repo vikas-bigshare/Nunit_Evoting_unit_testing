@@ -16,9 +16,6 @@ using System.Text;
 using Microsoft.AspNetCore.Http.Internal;
 using System.Threading;
 
-
-
-
 namespace Evoting_Nunit_test
 {
  
@@ -56,39 +53,34 @@ namespace Evoting_Nunit_test
             public data Data { get; set; }
 
         }
-
-
         public async Task callRTA()
         {
             RTAUnitTest rTAUnitTestr = new RTAUnitTest(event_id);
-            var rvalue = await rTAUnitTestr.Test_RTARegistration();
-            RTAUserId = rvalue.Data.UserID;
-            RTAAudId = rvalue.Data.aud_id;
-
+            RTA_Module.RTA_Registration.Root rvalue = await rTAUnitTestr.Test_RTARegistration();
+            RTAUserId = rvalue.data.UserID;
+            RTAAudId = rvalue.data.aud_id;
         }
-      
         public async Task callScrutinizer()
         {
             ScrutinizerUnitTest scrutinizerUnits = new ScrutinizerUnitTest(event_id);
-            var rvalue = await scrutinizerUnits.Test_ScrutRegistration();
-            scrut_UserId = rvalue.Data.UserID;
-            scrut_rowid = rvalue.Data.rowid;
+            Scrutinizer_Module.Scrutinizer_Registration.Root rvalue = await scrutinizerUnits.Test_ScrutRegistration();
+            scrut_UserId = rvalue.data.UserID;
+            scrut_rowid = rvalue.data.rowid;
         }
-       
         public async Task Test_CompanyRegistration()
         {
-            var check = await _objcom.Post_Registration(Company.Registration(RTAAudId));
-            userid = check.data.UserID;
-            // Assert.AreEqual("New Registration completed Successfully", check.data.Message);
+            var someval = await _objcom.Post_Registration(Company.Registration(RTAAudId));
+            userid = someval.data.UserID;
+            //Assert.AreEqual("New Registration completed Successfully", check.data.Message);
         } 
 
      
         public async Task Test_CompanyLogin()
         {
-            var check = await _objcom.Post_Login(Company.Default_user(userid));
+            var someval= await _objcom.Post_Login(Company.Default_user(userid));
             //Assert.IsNotNull(check.Message);
             //Assert.AreEqual("User logged in succesfuly", check.Message);
-            token = check.data.Token;
+            token = someval.data.Token;
         }
       
         public async Task Test_postdownloadagreement()
@@ -97,7 +89,6 @@ namespace Evoting_Nunit_test
             jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
             jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
             docno = jsonparsingcls1.Data.doc_no;
-
             //Assert.IsNotNull(check.Message);
             // Assert.AreEqual(200, check.statusCode);
 
@@ -122,7 +113,7 @@ namespace Evoting_Nunit_test
      
         public async Task Test_Postgenerateevent()
         {
-            var check = await _objcom.Post_GenerateEvent(Company.generate_event(scrut_rowid), token);
+            var check = await _objcom.Post_GenerateEvent(Company.generate_event(scrut_rowid),token);
             jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
             jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
             event_id = jsonparsingcls1.Data.event_id;
@@ -268,6 +259,10 @@ namespace Evoting_Nunit_test
         {
             CustodianUnitTest ObjCusto = new CustodianUnitTest(event_id);
             await ObjCusto.Test_CustodianLogin(Cust_UserId);
+            await ObjCusto.Test_CustodianFileUpload();
+            await ObjCusto.Test_CustodianPOAUpload();
+
+
         }
     }
 }

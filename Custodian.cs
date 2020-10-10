@@ -60,6 +60,16 @@ namespace Evoting_Nunit_test
             };
 
         }
+
+        public static FJC_DOC_Upload CustDocupload(int filedocid)
+        {
+            return new FJC_DOC_Upload()
+            {
+                doc_id= filedocid,
+                upload_type= "power_of_attorney"
+            };
+        }
+      
         public async Task<dynamic> Post_Login(FJC_LoginRequest _fjc_login)
         {
             var get_url1 = await CommanUrl.Login().PostJsonAsync(_fjc_login).ReceiveString();
@@ -69,6 +79,19 @@ namespace Evoting_Nunit_test
         {
             var get_url1 = await CommanUrl.Registration().WithHeader("Token", token).PostJsonAsync(fJC_Registration).ReceiveString();
              return get_url1;
+        }
+
+        public async Task<dynamic> Post_FileUpload(string token)
+        {
+            var get_url1 = await CommanUrl.ComFileUpload().WithHeader("Token", token).PostMultipartAsync(x =>
+                          x.AddFile("files", @"C:\Evoting-Github\Files\dummy_POA_20201008_1201060500039425.pdf")
+                          .AddString("upload_type", "POA")).ReceiveString();
+            return get_url1;
+        }
+        public async Task<dynamic> Post_POA_Upload(FJC_DOC_Upload fJC_DOC_Upload,string token)
+        {
+            var get_url1 = await CommanUrl.DocUpload().WithHeader("Token", token).PostJsonAsync(fJC_DOC_Upload).ReceiveString();
+            return get_url1;
         }
     }
 }

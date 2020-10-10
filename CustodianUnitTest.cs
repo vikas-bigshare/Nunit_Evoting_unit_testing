@@ -46,6 +46,18 @@ namespace Evoting_Nunit_test
             Custodian_Module.Custodian_Login.Root someval = JsonConvert.DeserializeObject<Custodian_Module.Custodian_Login.Root>(check);
             token = someval.data.Token;
         }
+        public async Task Test_CustodianFileUpload()
+        {
+            var check = await _objcom.Post_FileUpload( token);
+             Custodian_Module.Cust_FileUpload.Root someval = JsonConvert.DeserializeObject<Custodian_Module.Cust_FileUpload.Root>(check);
+             filedocid = someval.data.doc_id;
+        }
+        public async Task Test_CustodianPOAUpload()
+        {
+            var check = await _objcom.Post_POA_Upload(Custodian.CustDocupload(filedocid),token);
+            Custodian_Module.Cust_POAUpload.Root someval = JsonConvert.DeserializeObject<Custodian_Module.Cust_POAUpload.Root>(check);
+            string msg = someval.message;
+        }
 
 
     }
