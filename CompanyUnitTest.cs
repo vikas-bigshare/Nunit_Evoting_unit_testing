@@ -209,7 +209,7 @@ namespace Evoting_Nunit_test
         //    string msg = jsonparsingcls1.message;
         //}
 
-      
+
         public async Task callRTAsecond()
         {
             RTAUnitTest rTAUnitTest = new RTAUnitTest(event_id);
@@ -223,8 +223,8 @@ namespace Evoting_Nunit_test
             await rTAUnitTest.Test_PostNewgeneratedFileUpload();
             await rTAUnitTest.Test_postROMupload();
             await rTAUnitTest.Test_PostFileUpload(); 
-            await rTAUnitTest.Test_postApprovedEvent();
-            await rTAUnitTest.Test_Geteventlistapproved();
+            //await rTAUnitTest.Test_postApprovedEvent();
+            //await rTAUnitTest.Test_Geteventlistapproved();
         }
         
         public async Task callScrutinizersecond()
@@ -261,7 +261,8 @@ namespace Evoting_Nunit_test
             await ObjCusto.Test_CustodianLogin(Cust_UserId);
             await ObjCusto.Test_CustodianFileUpload();
             await ObjCusto.Test_CustodianPOAUpload();
-
+            await ObjCusto.Test_CustodianFileUpload2();
+            await ObjCusto.Test_CustodianVotfileupload();
 
         }
     }

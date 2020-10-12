@@ -66,6 +66,7 @@ namespace Evoting_Nunit_test
             public class Data
             {
                 public string remark { get; set; }
+                public int doc_id { get; set; }
             }
 
             public class Root
@@ -74,6 +75,23 @@ namespace Evoting_Nunit_test
                 public string message { get; set; }
                 public Data data { get; set; }
             }
+        }
+
+
+        public class Cust_VotfileUpload
+        {
+            public class Data
+            {
+                public string Remark { get; set; }
+            }
+
+            public class Root
+            {
+                public int statusCode { get; set; }
+                public string message { get; set; }
+                public Data data { get; set; }
+            }
+
         }
     }
 

@@ -154,7 +154,7 @@ namespace Evoting_Nunit_test
         }
         public async Task<dynamic> Post_UnblockEvent(string event_id,string token)
         {
-            var get_url1 = await CommanUrl.EventBlockUnblock().WithHeader("Token", token).SetQueryParam("event_id", event_id).PostJsonAsync("").ReceiveString();
+            var get_url1 = await CommanUrl.EventBlock().WithHeader("Token", token).SetQueryParam("event_id", event_id).PostJsonAsync("").ReceiveString();
             return get_url1;
         }
 

@@ -264,7 +264,7 @@ namespace Evoting_Nunit_test
        
         public async Task<dynamic> PostApproved_Event(string event_id,string token)
         {
-            var get_url1 = await CommanUrl.ApprovedEvent().WithHeader("Token", token).PostJsonAsync(event_id).ReceiveString();
+            var get_url1 = await CommanUrl.ApprovedEvent().WithHeader("Token", token).SetQueryParam("event_id", event_id).PostJsonAsync("").ReceiveString();
             return get_url1;
         }
        

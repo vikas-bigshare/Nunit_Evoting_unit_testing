@@ -165,22 +165,22 @@ namespace Evoting_Nunit_test
             string msg = check.message;
         }
        
-        public async Task Test_postApprovedEvent()
-        {
-            var check = await _objcom.PostApproved_Event(event_id, token);
-            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-            string msg = jsonparsingcls1.Data.remark;
-        }
+        //public async Task Test_postApprovedEvent()
+        //{
+        //    var check = await _objcom.PostApproved_Event(event_id, token);
+        //    jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
+        //    jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
+        //    string msg = jsonparsingcls1.Data.remark;
+        //}
      
-        public async Task Test_Geteventlistapproved()
-        {
-            var check = await _objcom.Get_EventList("approved", token);
-            Assert.AreEqual(200, check.statusCode);
-            //jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-            //jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-            //string msg = jsonparsingcls1.message;
-        }
+        //public async Task Test_Geteventlistapproved()
+        //{
+        //    var check = await _objcom.Get_EventList("approved", token);
+        //    Assert.AreEqual(200, check.statusCode);
+        //    //jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
+        //    //jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
+        //    //string msg = jsonparsingcls1.message;
+       // }
 
     }
 }

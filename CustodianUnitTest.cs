@@ -33,6 +33,7 @@ namespace Evoting_Nunit_test
         public int docno { get; set; }
         public string event_id { get; set; }
         public int filedocid { get; set; }
+        public int filedocid_Vot { get; set; }
         public string fileLocMove { get; set; }
       
         public async Task<Custodian_Module.Custodian_Registration.Root> Test_CustodianRegistration()
@@ -56,6 +57,21 @@ namespace Evoting_Nunit_test
         {
             var check = await _objcom.Post_POA_Upload(Custodian.CustDocupload(filedocid),token);
             Custodian_Module.Cust_POAUpload.Root someval = JsonConvert.DeserializeObject<Custodian_Module.Cust_POAUpload.Root>(check);
+            string msg = someval.message;
+            //filedocid = someval.data.doc_id;
+        }
+
+           public async Task Test_CustodianFileUpload2()
+        {
+            var check = await _objcom.Post_CustFileUpload(token);
+            Custodian_Module.Cust_FileUpload.Root someval = JsonConvert.DeserializeObject<Custodian_Module.Cust_FileUpload.Root>(check);
+            string msg = someval.message;
+            filedocid_Vot = someval.data.doc_id;
+        }
+        public async Task Test_CustodianVotfileupload()
+        {
+            var check = await _objcom.Post_Cust_Votfileupload(Custodian.CustvotfileUpload(filedocid_Vot, event_id), token);
+            Custodian_Module.Cust_VotfileUpload.Root someval = JsonConvert.DeserializeObject<Custodian_Module.Cust_VotfileUpload.Root>(check);
             string msg = someval.message;
         }
 

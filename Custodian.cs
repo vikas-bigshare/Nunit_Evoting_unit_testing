@@ -69,7 +69,16 @@ namespace Evoting_Nunit_test
                 upload_type= "power_of_attorney"
             };
         }
-      
+
+        public static FJC_ROMUpload CustvotfileUpload(int filedocid,string eventid)
+        {
+            return new FJC_ROMUpload()
+            {
+                doc_id = filedocid,
+                event_id = Convert.ToInt32(eventid)
+            };
+        }
+
         public async Task<dynamic> Post_Login(FJC_LoginRequest _fjc_login)
         {
             var get_url1 = await CommanUrl.Login().PostJsonAsync(_fjc_login).ReceiveString();
@@ -88,10 +97,26 @@ namespace Evoting_Nunit_test
                           .AddString("upload_type", "POA")).ReceiveString();
             return get_url1;
         }
+
+        public async Task<dynamic> Post_CustFileUpload(string token)
+        {
+            var get_url1 = await CommanUrl.ComFileUpload().WithHeader("Token", token).PostMultipartAsync(x =>
+                          x.AddFile("files", @"C:\Evoting-Github\Files\Sample_file_for_Custodian.txt")
+                          .AddString("upload_type", "ROM")).ReceiveString();
+            return get_url1;
+        }
+
         public async Task<dynamic> Post_POA_Upload(FJC_DOC_Upload fJC_DOC_Upload,string token)
         {
             var get_url1 = await CommanUrl.DocUpload().WithHeader("Token", token).PostJsonAsync(fJC_DOC_Upload).ReceiveString();
             return get_url1;
         }
+        
+          public async Task<dynamic> Post_Cust_Votfileupload(FJC_ROMUpload fJC_DOC_Upload, string token)
+        {
+            var get_url1 = await CommanUrl.CustodianVotfileupload().WithHeader("Token", token).PostJsonAsync(fJC_DOC_Upload).ReceiveString();
+            return get_url1;
+        }
+
     }
 }

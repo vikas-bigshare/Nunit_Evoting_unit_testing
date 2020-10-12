@@ -69,8 +69,8 @@ namespace Evoting_Nunit_test
             await company.Test_postROMupload();
             await company.Test_postApprovedEvent();
             await company.callRTAsecond();
-            await company.callScrutinizersecond();
             await company.callInvestor();
+            await company.callScrutinizersecond();
             await company.callCustRegistration();
             await company.callCustodion();
         }
