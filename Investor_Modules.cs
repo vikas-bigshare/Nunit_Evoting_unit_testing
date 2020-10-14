@@ -23,13 +23,25 @@ namespace Evoting_Nunit_test
                 public Data data { get; set; }
             }
         }
-
-
-        public class Investorvote
+       public class Investorvote
         {
             public class Data
             {
                 public string REMARK { get; set; }
+            }
+
+            public class Root
+            {
+                public int statusCode { get; set; }
+                public string message { get; set; }
+                public Data data { get; set; }
+            }
+        }
+       public class Investor_Speaker
+        {
+            public class Data
+            {
+                public string remark { get; set; }
             }
 
             public class Root

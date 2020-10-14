@@ -23,7 +23,6 @@ namespace Evoting_Nunit_test
                 public Data data { get; set; }
             }
         }
-
         public class Custodian_Registration
         {
             public class Data
@@ -41,7 +40,6 @@ namespace Evoting_Nunit_test
             }
 
         }
-
         public class Cust_FileUpload
         {
             public class Data
@@ -60,7 +58,6 @@ namespace Evoting_Nunit_test
                 public Data data { get; set; }
             }
         }
-
         public class Cust_POAUpload
         {
             public class Data
@@ -76,8 +73,6 @@ namespace Evoting_Nunit_test
                 public Data data { get; set; }
             }
         }
-
-
         public class Cust_VotfileUpload
         {
             public class Data
@@ -95,6 +90,4 @@ namespace Evoting_Nunit_test
         }
     }
 
-
-    
 }

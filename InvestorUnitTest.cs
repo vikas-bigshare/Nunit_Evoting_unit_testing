@@ -36,7 +36,7 @@ namespace Evoting_Nunit_test
             var check = await _objcom.Post_Login(Investor.Default_user());
             Investor_Modules.Investor_Login.Root someval = JsonConvert.DeserializeObject<Investor_Modules.Investor_Login.Root>(check);
             token = someval.data.Token;
-            Assert.AreEqual("User logged in succesfuly", someval.message);
+            Assert.AreEqual("User logged in succesfully", someval.message);
         }
         public async Task Post_InvestorVoting()
         {
@@ -44,5 +44,13 @@ namespace Evoting_Nunit_test
             Investor_Modules.Investorvote.Root someval = JsonConvert.DeserializeObject<Investor_Modules.Investorvote.Root>(check);
             Assert.IsNotNull(someval.data.REMARK);
         }
+        public async Task Post_InvestorSpeaker()
+        {
+            var check = await _objcom.PostInvestorSpeaker(Investor.InvestorSpeaker(event_id), token);
+            Investor_Modules.Investor_Speaker.Root someval = JsonConvert.DeserializeObject<Investor_Modules.Investor_Speaker.Root>(check);
+            Assert.IsNotNull(someval.message);
+            Assert.AreEqual("Speaker Registered saved successfully", someval.message);
+        }
+
     }
 }

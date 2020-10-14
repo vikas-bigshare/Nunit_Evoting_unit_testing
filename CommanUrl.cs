@@ -147,6 +147,11 @@ namespace Evoting_Nunit_test
             return _ComEvntDe;
         }
 
+        public static string Investorspeaker()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("speaker").AppendPathSegment("register");
+            return _ComEvntDe;
+        }
         public static string CustodianVotfileupload()
         {
             var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("cust-ROM");

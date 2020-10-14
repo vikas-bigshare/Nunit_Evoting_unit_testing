@@ -23,7 +23,6 @@ namespace Evoting_Nunit_test
         {
             return new FJC_LoginRequest()
             { UserID = "1201060500039425", system_ip = "127.0.0.1", encrypt_Password = "bigshare@123" };
-
         }
         public static FJC_ForgotPassword forgot_password()   //reset password
         {
@@ -43,7 +42,6 @@ namespace Evoting_Nunit_test
                 encrypt_NewPassword = "bigshare@123"
             };
         }
-
         public static FJC_Vote_Investor VoteInvestore(string event_id)
         {
             List<FJC_Resolutions_Vote> FJC_Resolutions_Vote = new List<FJC_Resolutions_Vote>();
@@ -60,40 +58,51 @@ namespace Evoting_Nunit_test
 
             };
         }
+
+        public static FJC_SpeakerRegister InvestorSpeaker(string event_id)  
+        {
+            return new FJC_SpeakerRegister()
+            {
+                event_id = event_id,
+                email = "vikasp@bigshareonline.com"
+            };
+        }
+
+        ////////////////////////////////////////////////////////////////Investor///////////////////////////////////////////////////////////////////
         public async Task<dynamic> Post_Login(FJC_LoginRequest _fjc_login)
         {
             var get_url1 = await CommanUrl.Login().PostJsonAsync(_fjc_login).ReceiveString();
-            //dynamic _obj = JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
-            //token = _obj.data.Token;
-            //return _obj;
-          return   get_url1;
+            return   get_url1;
         }
         public async Task<dynamic> PostInvestorVote(FJC_Vote_Investor fJC_Vote_Investor,string token)//reset password
         {
-            var get_url1 = await CommanUrl.InvestoreVoting().WithHeader("Token", token).PostJsonAsync(fJC_Vote_Investor).ReceiveString();
-            //var message = get_url1.message;
+            var get_url1 = await CommanUrl.InvestoreVoting().WithOAuthBearerToken(token).PostJsonAsync(fJC_Vote_Investor).ReceiveString();
             return get_url1;
         }
-
+        public async Task<dynamic> PostInvestorSpeaker(FJC_SpeakerRegister fJC_SpeakerRegister, string token)//reset password
+        {
+            var get_url1 = await CommanUrl.Investorspeaker().WithOAuthBearerToken(token).PostJsonAsync(fJC_SpeakerRegister).ReceiveString();
+            return get_url1;
+        }
         public async Task<dynamic> PostForgotPassword(FJC_ForgotPassword fJC_ForgotPassword)//reset password
         {
-            var get_url1 = await CommanUrl.ForgotPass().WithHeader("Token", token).PostJsonAsync(fJC_ForgotPassword).ReceiveString();
+            var get_url1 = await CommanUrl.ForgotPass().WithOAuthBearerToken(token).PostJsonAsync(fJC_ForgotPassword).ReceiveString();
             return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         }
         public async Task<dynamic> Post_ChangePasssword(FJC_ChangePassword fJC_ChangePassword)
         {
-            var get_url1 = await CommanUrl.ChangePass().WithHeader("Token", token).PostJsonAsync(fJC_ChangePassword).ReceiveString();
+            var get_url1 = await CommanUrl.ChangePass().WithOAuthBearerToken(token).PostJsonAsync(fJC_ChangePassword).ReceiveString();
             return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         }
         public async Task<dynamic> Get_EventList(string str)
         {
-            var get_url1 = await CommanUrl.EventList().WithHeader("Token", token).SetQueryParam("str", str).GetJsonAsync();
+            var get_url1 = await CommanUrl.EventList().WithOAuthBearerToken(token).SetQueryParam("str", str).GetJsonAsync();
             var message = get_url1.message;
             return get_url1;
         }
         public async Task<dynamic> Get_Prifile(int aud_id)
         {
-            var get_url1 = await CommanUrl.userprofile().WithHeader("Token", token).SetQueryParam("aud_id", aud_id).GetJsonAsync();
+            var get_url1 = await CommanUrl.userprofile().WithOAuthBearerToken(token).SetQueryParam("aud_id", aud_id).GetJsonAsync();
             var message = get_url1.message;
             return get_url1;
         }

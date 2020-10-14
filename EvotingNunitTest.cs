@@ -22,36 +22,8 @@ namespace Evoting_Nunit_test
     public class EvotingNunitTest
     {
 
-        public string token { get; set; }
-        public string userid { get; set; }
-        public string RTAUserId { get; set; }
-        public int RTAAudId { get; set; }
-        public string scrut_UserId { get; set; }
-        public int scrut_rowid { get; set; }
-        public int docno { get; set; }
-        public string event_id { get; set; }
-        public int filedocid { get; set; }
-        public string fileLocMove { get; set; }
-        public class data
-        {
-            public int doc_no { get; set; }
-            public string event_id { get; set; }
-            public string remark { get; set; }
-            public int doc_id { get; set; }
-            public int rowid { get; set; }
-            public int aud_id { get; set; }
-            public string UserID { get; set; }
-        }
-        public class jsonparsingcls
-        {
-            public string statusCode { get; set; }
-            public string message { get; set; }
-            public data Data { get; set; }
-
-        }
-
        [Test, Order(1)]
-        public async Task CheckFlow()
+        public async Task CheckFlow()   
         {
             CompanyUnitTest company = new CompanyUnitTest();
             await company.callRTA();

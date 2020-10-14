@@ -27,7 +27,6 @@ namespace Evoting_Nunit_test
         }
 
         Custodian _objcom = new Custodian();
-
         public string token { get; set; }
         public string userid { get; set; }
         public int docno { get; set; }
@@ -58,10 +57,8 @@ namespace Evoting_Nunit_test
             var check = await _objcom.Post_POA_Upload(Custodian.CustDocupload(filedocid),token);
             Custodian_Module.Cust_POAUpload.Root someval = JsonConvert.DeserializeObject<Custodian_Module.Cust_POAUpload.Root>(check);
             string msg = someval.message;
-            //filedocid = someval.data.doc_id;
         }
-
-           public async Task Test_CustodianFileUpload2()
+        public async Task Test_CustodianFileUpload2()
         {
             var check = await _objcom.Post_CustFileUpload(token);
             Custodian_Module.Cust_FileUpload.Root someval = JsonConvert.DeserializeObject<Custodian_Module.Cust_FileUpload.Root>(check);
@@ -74,7 +71,6 @@ namespace Evoting_Nunit_test
             Custodian_Module.Cust_VotfileUpload.Root someval = JsonConvert.DeserializeObject<Custodian_Module.Cust_VotfileUpload.Root>(check);
             string msg = someval.message;
         }
-
 
     }
 }

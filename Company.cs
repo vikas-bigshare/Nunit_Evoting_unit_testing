@@ -134,7 +134,6 @@ namespace Evoting_Nunit_test
             };
 
         }
-
         public static FJC_Registration Profile()
         {
             return new FJC_Registration()
@@ -184,127 +183,97 @@ namespace Evoting_Nunit_test
 
         //////////////////////////////////////////////////////company //////////////////////////////////////////////////////////////////
         
-        public static async Task<dynamic> Post_Login1(FJC_LoginRequest _fjc_login)
-        {
-            string default_link = "http://bigshareonline.com:6001";
-            var _url1 = default_link.AppendPathSegment("api").AppendPathSegment("Login");//commonurl.login
-            var get_url1 = await _url1.PostJsonAsync(_fjc_login).ReceiveString();
-            return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
-            //var opt_check = _return_obj.data.EmailID;
-            //string token = _return_obj.data.Token;
-            //Console.WriteLine(opt_check);
-            //Console.WriteLine(token);
-        }
-      
         public async Task<dynamic> Post_Login(FJC_LoginRequest _fjc_login)
         {
             var get_url1 = await CommanUrl.Login().PostJsonAsync(_fjc_login).ReceiveString();
-            return JsonConvert.DeserializeObject<Company_Module.Company_Login.Root>(get_url1);
+            return get_url1;
         }
-       
         public async Task<dynamic> Post_GenerateEvent(FJC_GenerateEVENT fJC_GenerateEVENT,string token)
         {
-            string _url = CommanUrl.GenerateEvent();
-            var get_url1 = await _url.WithHeader("Token", token).PostJsonAsync(fJC_GenerateEVENT).ReceiveString();
+            var get_url1 = await CommanUrl.GenerateEvent().WithOAuthBearerToken(token).PostJsonAsync(fJC_GenerateEVENT).ReceiveString();
             return get_url1;
-            //return JsonConvert.DeserializeObject<Company_Module.Company_GenerateEvent.Root>(get_url1);
         }
      
         public async Task<dynamic> Post_Company_Eventdetails(FJC_CompanyUpdate_Event fJC_CompanyUpdate_Event)
         {
-            var get_url1 = await CommanUrl.ComEvntDetail().WithHeader("Token", token).PostJsonAsync(fJC_CompanyUpdate_Event).ReceiveString();
+            var get_url1 = await CommanUrl.ComEvntDetail().WithOAuthBearerToken(token).PostJsonAsync(fJC_CompanyUpdate_Event).ReceiveString();
             return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         }
       
         public async Task<dynamic> Put_Company_Eventdetails(FJC_CompanyUpdate_Event fJC_CompanyUpdate_Event,string token)
         {
-            var get_url1 = await CommanUrl.ComEvntDetail().WithHeader("Token", token).PutJsonAsync(fJC_CompanyUpdate_Event).ReceiveString();
+            var get_url1 = await CommanUrl.ComEvntDetail().WithOAuthBearerToken(token).PutJsonAsync(fJC_CompanyUpdate_Event).ReceiveString();
             return get_url1;
         }
-       
         public async Task<dynamic> Get_Company_Eventdetails(int event_id)
         {
-            //var get_url1 = await CommanUrl.ComEvntDetail().WithHeader("Token", token).PostJsonAsync(fJC_CompanyUpdate_Event).ReceiveString();
-            var get_url1 = await CommanUrl.ComFileUpload().WithHeader("Token", token).SetQueryParam("doc_id", event_id).GetJsonAsync();
+            var get_url1 = await CommanUrl.ComFileUpload().WithOAuthBearerToken(token).SetQueryParam("doc_id", event_id).GetJsonAsync();
             var message = get_url1.data.file_name;
             return get_url1;
-          
         }
-       
         public async Task<dynamic> Post_FileUpload(string token)
         {
-            var get_url1 = await CommanUrl.ComFileUpload().WithHeader("Token", token).PostMultipartAsync(x =>
+            var get_url1 = await CommanUrl.ComFileUpload().WithOAuthBearerToken(token).PostMultipartAsync(x =>
                             x.AddFile("files", @"C:\Evoting-Github\Files\CDSLForTest.txt")
                             .AddString("upload_type", "ROM")).ReceiveString();
             return get_url1;
-            //return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         }
-
-
         public async Task<dynamic> Post_FileUploadnew(string token,string fileLocMove)
         {
-            var get_url1 = await CommanUrl.ComFileUpload().WithHeader("Token", token).PostMultipartAsync(x =>
+            var get_url1 = await CommanUrl.ComFileUpload().WithOAuthBearerToken(token).PostMultipartAsync(x =>
                             x.AddFile("files", fileLocMove)
                             .AddString("upload_type", "ROM")).ReceiveString();
             return get_url1;
-            //return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         }
         public async Task<dynamic> Get_FileUpload(int doc_id)   
         {
-            var get_url1 = await CommanUrl.ComFileUpload().WithHeader("Token", token).SetQueryParam("doc_id", doc_id).GetJsonAsync();
+            var get_url1 = await CommanUrl.ComFileUpload().WithOAuthBearerToken(token).SetQueryParam("doc_id", doc_id).GetJsonAsync();
             var message = get_url1.data.file_name;
             return get_url1;
         }
-      
         public async Task<dynamic> Post_Rom_Upload(FJC_ROMUpload fJC_ROM, string token)
         {
-            var get_url1 = await CommanUrl.ComRomUpload().WithHeader("Token", token).PostJsonAsync(fJC_ROM).ReceiveString();
-            return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
+            var get_url1 = await CommanUrl.ComRomUpload().WithOAuthBearerToken(token).PostJsonAsync(fJC_ROM).ReceiveString();
+            return get_url1;
         }
        
         public async Task<dynamic> PostApproved_Event(string event_id,string token)
         {
-            var get_url1 = await CommanUrl.ApprovedEvent().WithHeader("Token", token).SetQueryParam("event_id", event_id).PostJsonAsync("").ReceiveString();
+            var get_url1 = await CommanUrl.ApprovedEvent().WithOAuthBearerToken(token).SetQueryParam("event_id", event_id).PostJsonAsync("").ReceiveString();
             return get_url1;
         }
-       
         public async Task<dynamic> Get_List(string str,string token)
         {
-            var get_url1 = await CommanUrl.CompanyList().WithHeader("Token", token).SetQueryParam("str", str).GetJsonAsync();
+            var get_url1 = await CommanUrl.CompanyList().WithOAuthBearerToken(token).SetQueryParam("str", str).GetJsonAsync();
             var message = get_url1.message;
             return get_url1;
         }
-       
         public async Task<dynamic> Get_PrivateList(string str)
         {
-            var get_url1 = await CommanUrl.PrivateList().WithHeader("Token", token).SetQueryParam("str", str).GetJsonAsync();
+            var get_url1 = await CommanUrl.PrivateList().WithOAuthBearerToken(token).SetQueryParam("str", str).GetJsonAsync();
             var message = get_url1.message;
             return get_url1;
         }
-       
         public async Task<dynamic> Get_EventList(string str,string token)
         {
-            var get_url1 = await CommanUrl.EventList().WithHeader("Token", token).SetQueryParam("str", str).GetJsonAsync();
+            var get_url1 = await CommanUrl.EventList().WithOAuthBearerToken(token).SetQueryParam("str", str).GetJsonAsync();
             var message = get_url1.message;
             return get_url1;
         }
-      
         public async Task<dynamic> Post_ChangePasssword(FJC_ChangePassword fJC_ChangePassword)
         {
-            var get_url1 = await CommanUrl.ChangePass().WithHeader("Token", token).PostJsonAsync(fJC_ChangePassword).ReceiveString();
+            var get_url1 = await CommanUrl.ChangePass().WithOAuthBearerToken(token).PostJsonAsync(fJC_ChangePassword).ReceiveString();
             return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         }
-       
         public async Task<dynamic> PostForgotPassword(FJC_ForgotPassword fJC_ForgotPassword)
         {
-            var get_url1 = await CommanUrl.ForgotPass().WithHeader("Token", token).PostJsonAsync(fJC_ForgotPassword).ReceiveString();
+            var get_url1 = await CommanUrl.ForgotPass().WithOAuthBearerToken(token).PostJsonAsync(fJC_ForgotPassword).ReceiveString();
             return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         }
-        
         public async Task<dynamic> Post_Registration(FJC_Registration fJC_Registration)
         {
-            var get_url1 = await CommanUrl.Registration().WithHeader("Token", token).PostJsonAsync(fJC_Registration).ReceiveString();
-            return JsonConvert.DeserializeObject<Custodian_Module.Custodian_Registration.Root>(get_url1);
+            var get_url1 = await CommanUrl.Registration().WithOAuthBearerToken(token).PostJsonAsync(fJC_Registration).ReceiveString();
+            return get_url1;
         }
 
         //////public async Task<dynamic> GetRegistration(int aud_id)
@@ -320,10 +289,9 @@ namespace Evoting_Nunit_test
         //////    return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         //////}
 
-      
         public async Task<dynamic> Post_DocUpload(FJC_DOC_Upload fJC_DOC_Upload,string token)
         {
-            var get_url1 = await CommanUrl.DocUpload().WithHeader("Token", token).PostJsonAsync(fJC_DOC_Upload).ReceiveString();
+            var get_url1 = await CommanUrl.DocUpload().WithOAuthBearerToken(token).PostJsonAsync(fJC_DOC_Upload).ReceiveString();
             return get_url1;
         }
 
@@ -336,27 +304,22 @@ namespace Evoting_Nunit_test
       
         public async Task<dynamic> Get_Docdownload(string token)
         {
-            var get_url1 = await CommanUrl.DocUpload().WithHeader("Token", token).GetJsonAsync();
-            var message = get_url1.statusCode;
+            var get_url1 = await CommanUrl.DocUpload().WithOAuthBearerToken(token).GetJsonAsync();
             return get_url1;
         }
-       
         public async Task<dynamic> Post_Docdownload(string DownloadType,string token)   //tri_partiate_agreement
         {
-          
-            var get_url1 = await CommanUrl.DocDownload().WithHeader("Token", token).SetQueryParam("DownloadType", DownloadType).PostJsonAsync("").ReceiveString();
+            var get_url1 = await CommanUrl.DocDownload().WithOAuthBearerToken(token).SetQueryParam("DownloadType", DownloadType).PostJsonAsync("").ReceiveString();
             return get_url1;
         }
-      
         public async Task<dynamic> Put_Prifile(FJC_Registration fJC_Registration)
         {
-            var get_url1 = await CommanUrl.userprofile().WithHeader("Token", token).PutJsonAsync(fJC_Registration).ReceiveString();
+            var get_url1 = await CommanUrl.userprofile().WithOAuthBearerToken(token).PutJsonAsync(fJC_Registration).ReceiveString();
             return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
         }
-      
         public async Task<dynamic> Get_Prifile()
         {
-            var get_url1 = await CommanUrl.userprofile().WithHeader("Token", token).GetJsonAsync();
+            var get_url1 = await CommanUrl.userprofile().WithOAuthBearerToken(token).GetJsonAsync();
             var message = get_url1.message;
             return get_url1;
         }

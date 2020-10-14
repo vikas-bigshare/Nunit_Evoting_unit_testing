@@ -23,7 +23,6 @@ namespace Evoting_Nunit_test
                 public Data data { get; set; }
             }
         }
-
         public class RTA_Registration
         {
             public class Data
@@ -41,5 +40,128 @@ namespace Evoting_Nunit_test
             }
 
         }
+        public class RTA_postdownloadagreement
+        {
+            public class Data
+            {
+                public int doc_no { get; set; }
+                public string file_name { get; set; }
+                public string url { get; set; }
+            }
+
+            public class Root
+            {
+                public int statusCode { get; set; }
+                public string message { get; set; }
+                public Data data { get; set; }
+            }
+        }
+        public class RTA_uploadagreement
+        {
+            public class Data
+            {
+                public string remark { get; set; }
+            }
+
+            public class Root
+            {
+                public int statusCode { get; set; }
+                public string message { get; set; }
+                public Data data { get; set; }
+            }
+
+        }
+        public class RTA_getdownloadagreement
+        {
+            public class Root
+            {
+                public int statusCode { get; set; }
+                public string message { get; set; }
+                public List<object> data { get; set; }
+            }
+        }
+        public class RTA_Putgenerateevent
+        {
+            public class Data
+            {
+                public string Remark { get; set; }
+                public string UpdateBy { get; set; }
+                public int EVENT_ID { get; set; }
+                public string ISIN { get; set; }
+                public int isin_id { get; set; }
+                public int evoting_id { get; set; }
+                public string TOTAL_NOF_SHARE { get; set; }
+                public string VOTING_RIGHTS { get; set; }
+                public string CUT_OF_DATE { get; set; }
+                public int scrutinizer_id { get; set; }
+                public DateTime ModifiedDatetime { get; set; }
+                public string VOTING_START_DATETIME { get; set; }
+                public string VOTING_END_DATETIME { get; set; }
+                public string MEETING_DATETIME { get; set; }
+                public DateTime LAST_DATE_NOTICE { get; set; }
+                public string VOTING_RESULT_DATE { get; set; }
+                public int Logo_doc_id { get; set; }
+                public string Upload_Logo_Filepath { get; set; }
+                public int Notice_doc_id { get; set; }
+                public string Upload_Notice_Filepath { get; set; }
+                public int Resolution_doc_id { get; set; }
+                public string Upload_Resolution_Filepath { get; set; }
+            }
+
+            public class Resolution
+            {
+                public int EVENT_RESOLUTION_ID { get; set; }
+                public string title { get; set; }
+                public string description { get; set; }
+                public string ModifiedBY { get; set; }
+                public string File_doc_path { get; set; }
+                public int FILE_DOC_ID { get; set; }
+                public DateTime modified_datetime { get; set; }
+            }
+
+            public class Root
+            {
+                public int statusCode { get; set; }
+                public string message { get; set; }
+                public Data data { get; set; }
+                public List<Resolution> resolution { get; set; }
+            }
+
+
+
+        }
+        public class RTA_PostNewGeneratedfile
+        {
+            public class Data
+            {
+                public int doc_id { get; set; }
+                public string file_name { get; set; }
+                public string url { get; set; }
+                public int uploadedby { get; set; }
+                public string name { get; set; }
+            }
+            public class Root
+            {
+                public int statusCode { get; set; }
+                public string message { get; set; }
+                public Data data { get; set; }
+            }
+
+        }
+        public class RTA_PostROMUpload
+        {
+            public class Data
+            {
+                public string Remark { get; set; }
+            }
+
+            public class Root
+            {
+                public int statusCode { get; set; }
+                public string message { get; set; }
+                public Data data { get; set; }
+            }
+        }
+
     }
 }

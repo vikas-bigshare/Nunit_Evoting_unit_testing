@@ -35,24 +35,7 @@ namespace Evoting_Nunit_test
         public string event_id { get; set; }
         public int filedocid { get; set; }
         public string fileLocMove { get; set; }
-        public class data
-        {
-            public int doc_no { get; set; }
-            public string event_id { get; set; }
-            public string remark { get; set; }
-            public int doc_id { get; set; }
-            public int rowid { get; set; }
-
-            public int aud_id { get; set; }
-            public string UserID { get; set; }
-        }
-        public class jsonparsingcls
-        {
-            public string statusCode { get; set; }
-            public string message { get; set; }
-            public data Data { get; set; }
-
-        }
+       
         public async Task callRTA()
         {
             RTAUnitTest rTAUnitTestr = new RTAUnitTest(event_id);
@@ -69,71 +52,68 @@ namespace Evoting_Nunit_test
         }
         public async Task Test_CompanyRegistration()
         {
-            var someval = await _objcom.Post_Registration(Company.Registration(RTAAudId));
+            var check = await _objcom.Post_Registration(Company.Registration(RTAAudId));
+            Custodian_Module.Custodian_Registration.Root someval = JsonConvert.DeserializeObject<Custodian_Module.Custodian_Registration.Root>(check);
             userid = someval.data.UserID;
-            //Assert.AreEqual("New Registration completed Successfully", check.data.Message);
         } 
-
      
         public async Task Test_CompanyLogin()
         {
-            var someval= await _objcom.Post_Login(Company.Default_user(userid));
-            //Assert.IsNotNull(check.Message);
-            //Assert.AreEqual("User logged in succesfuly", check.Message);
-            token = someval.data.Token;
+            var check = await _objcom.Post_Login(Company.Default_user(userid));
+            Company_Module.Company_Login.Root someval = JsonConvert.DeserializeObject<Company_Module.Company_Login.Root>(check);
+            Assert.IsNotNull(someval.data.token);
+            Assert.AreEqual("User logged in succesfully", someval.message);
+            token = someval.data.token;
         }
       
         public async Task Test_postdownloadagreement()
         {
             var check = await _objcom.Post_Docdownload("tri_partiate_agreement", token);
-            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-            docno = jsonparsingcls1.Data.doc_no;
-            //Assert.IsNotNull(check.Message);
-            // Assert.AreEqual(200, check.statusCode);
-
+            Company_Module.Com_postdownloadagreement.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_postdownloadagreement.Root>(check);
+            docno = someval.data.doc_no;
+            Assert.IsNotNull(someval.message);
+            Assert.AreEqual(200, someval.statusCode);
         }
-      
         public async Task Test_uploadagreement()
         {
             var check = await _objcom.Post_DocUpload(Company.Docupload(docno), token);
-            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-            string msg = jsonparsingcls1.message;
-            // Assert.IsNotNull(check.Message);
-            // Assert.AreEqual("User logged in succesfuly", check.Message);
+            Company_Module.Com_uploadagreement.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_uploadagreement.Root>(check);
+            Assert.IsNotNull( someval.message);
+            
         }
-     
+
         public async Task Test_getdownloadagreement()
         {
             var check = await _objcom.Get_Docdownload(token);
-            //Assert.IsNotNull(check.Message);
-            // Assert.AreEqual(200, check.statusCode);
+            //Company_Module.Com_getdownloadagreement.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_getdownloadagreement.Root>(check);
+            Assert.IsNotNull(check.message);
+            Assert.AreEqual(200, check.statusCode);
         }
-     
+
         public async Task Test_Postgenerateevent()
         {
             var check = await _objcom.Post_GenerateEvent(Company.generate_event(scrut_rowid),token);
-            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-            event_id = jsonparsingcls1.Data.event_id;
+            Company_Module.Com_GenerateEvent.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_GenerateEvent.Root>(check);
+            Assert.IsNotNull(someval.message);
+            Assert.AreEqual(200, someval.statusCode);
+            event_id =Convert.ToString(someval.data.Event_Id);
         }
       
         public async Task Test_Geteventlistcurrent()
         {
             var check = await _objcom.Get_EventList("current", token);
-            string msg = check.message;
+            Assert.IsNotNull(check.message);
+            Assert.AreEqual(200, check.statusCode);
         }
      
         public async Task Test_Putgenerateevent()
         {
             var check = await _objcom.Put_Company_Eventdetails(Company.Com_event_detail(event_id, scrut_rowid), token);
-            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-            string msg = jsonparsingcls1.message;
+            Company_Module.Com_Putgenerateevent.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_Putgenerateevent.Root>(check);
+            Assert.IsNotNull(someval.message);
+            Assert.AreEqual(200, someval.statusCode);
         }
-        //[SetUp]
-        //[Test, Order(10)]
+       
         //public async Task Test_PostFileUpload()
         //{
         //    var check = await _objcom.Post_FileUpload(token);
@@ -141,17 +121,12 @@ namespace Evoting_Nunit_test
         //    jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
         //    filedocid = jsonparsingcls1.Data.doc_id;
         //}
-
-       
         public void romuploadfile_eventid_change()
         {
-            
-           // string filepath = "C:\\Evoting-Github\\Files\\200520001_84382_15-06-2020_120609_final_excel-LMEL-15.06.2020.zip";
            string filepath = "C:\\Evoting-Github\\Files\\CDSLForTest.txt";
             string Romfile = "C:\\Evoting-Github\\Rom_uploadedFiles\\";
             using (StreamReader sr = new System.IO.StreamReader(filepath))
             {
-                //string eventid = "5555";
                 string changefirstline;
                 string firstline;
                 //string fileLocMove = "";
@@ -170,36 +145,33 @@ namespace Evoting_Nunit_test
                     fs.Close();
                 }
                 File.WriteAllText(fileLocMove, text);
-                //
-
             }
         }
-    
         public async Task Test_PostNewgeneratedFileUpload()
         {
             var check = await _objcom.Post_FileUploadnew(token, fileLocMove);
-            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-            filedocid = jsonparsingcls1.Data.doc_id;
+            Company_Module.Com_PostNewGeneratedfile.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_PostNewGeneratedfile.Root>(check);
+            Assert.IsNotNull(someval.message);
+            Assert.IsNotNull(someval.data.doc_id);
+            filedocid = someval.data.doc_id;
         }
-
-      
         public async Task Test_postROMupload()
         {
             var check = await _objcom.Post_Rom_Upload(Company.romupload(event_id, filedocid), token);
-             string msg = check.message;
+            Company_Module.Com_PostROMUpload.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_PostROMUpload.Root>(check);
+            Assert.IsNotNull(someval.message);
+            Assert.AreEqual("ROM Uploaded succesfully", someval.data.Remark);
+            string msg = someval.message;
         }
-
-        
         public async Task Test_postApprovedEvent()
         {
             var check = await _objcom.PostApproved_Event(event_id, token);
-            jsonparsingcls jsonparsingcls1 = new jsonparsingcls();
-            jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
-            string msg = jsonparsingcls1.Data.remark;
+            Company_Module.Com_PostApprovedEvent.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_PostApprovedEvent.Root>(check);
+            Assert.IsNotNull(someval.message);
+            Assert.AreEqual("Event Approved Succesfully", someval.data.Remark);
+            string msg = someval.message;
         }
-        //[SetUp]
-        //[Test, Order(15)]
+       
         //public async Task Test_Geteventlistapproved()
         //{
         //    var check = await _objcom.Get_EventList("approved", token);
@@ -208,8 +180,6 @@ namespace Evoting_Nunit_test
         //    jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
         //    string msg = jsonparsingcls1.message;
         //}
-
-
         public async Task callRTAsecond()
         {
             RTAUnitTest rTAUnitTest = new RTAUnitTest(event_id);
@@ -222,11 +192,10 @@ namespace Evoting_Nunit_test
             rTAUnitTest.romuploadfile_eventid_change();
             await rTAUnitTest.Test_PostNewgeneratedFileUpload();
             await rTAUnitTest.Test_postROMupload();
-            await rTAUnitTest.Test_PostFileUpload(); 
+            //await rTAUnitTest.Test_PostFileUpload(); 
             //await rTAUnitTest.Test_postApprovedEvent();
             //await rTAUnitTest.Test_Geteventlistapproved();
         }
-        
         public async Task callScrutinizersecond()
         {
             ScrutinizerUnitTest scrutinizerUnit = new ScrutinizerUnitTest(event_id);
@@ -245,6 +214,7 @@ namespace Evoting_Nunit_test
             InvestorUnitTest investorUnit = new InvestorUnitTest(event_id);
             await investorUnit.Test_InvestorLogin();
             await investorUnit.Post_InvestorVoting();
+            await investorUnit.Post_InvestorSpeaker();
         }
 
         public async Task callCustRegistration()
