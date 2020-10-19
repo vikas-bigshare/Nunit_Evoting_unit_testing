@@ -198,7 +198,8 @@ namespace Evoting_Nunit_test
         }
         public async Task callScrutinizersecond()
         {
-            ScrutinizerUnitTest scrutinizerUnit = new ScrutinizerUnitTest(event_id);
+           
+           ScrutinizerUnitTest scrutinizerUnit = new ScrutinizerUnitTest(event_id);
             await scrutinizerUnit.Test_ScrutLogin(scrut_UserId);
             await scrutinizerUnit.Test_postdownloadagreement();
             await scrutinizerUnit.Test_uploadagreement();
@@ -212,6 +213,7 @@ namespace Evoting_Nunit_test
         public async Task callInvestor()
         {
             InvestorUnitTest investorUnit = new InvestorUnitTest(event_id);
+           // InvestorUnitTest investorUnit = new InvestorUnitTest("50175");
             await investorUnit.Test_InvestorLogin();
             await investorUnit.Post_InvestorVoting();
             await investorUnit.Post_InvestorSpeaker();
@@ -234,6 +236,19 @@ namespace Evoting_Nunit_test
             await ObjCusto.Test_CustodianFileUpload2();
             await ObjCusto.Test_CustodianVotfileupload();
 
+        }
+        public async Task callEvoteAgency()
+        {
+            EvoteAgencyUnitTest ObjEvotAgency = new EvoteAgencyUnitTest(event_id);
+            await ObjEvotAgency.Test_EvotAgencyLogin();
+            // await ObjEvotAgency.Test_AccountList();
+            await ObjEvotAgency.Test_AccountLock();
+            await ObjEvotAgency.Test_AccountUnlock();
+            await ObjEvotAgency.Test_GetAccount();
+            await ObjEvotAgency.Test_PostAccountVerify();
+            await ObjEvotAgency.Test_PostAccountSearch();
+
+            
         }
     }
 }

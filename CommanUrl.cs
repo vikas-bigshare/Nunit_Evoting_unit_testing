@@ -157,5 +157,61 @@ namespace Evoting_Nunit_test
             var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("cust-ROM");
             return _ComEvntDe;
         }
+        public static string AccountList()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("account").AppendPathSegment("list");
+            return _ComEvntDe;
+        }
+        public static string GetAccount()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("account");
+            return _ComEvntDe;
+        }
+
+        public static string Accountverify()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("account").AppendPathSegment("verify");
+            return _ComEvntDe;
+        }
+
+        public static string Accountsearch()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("account").AppendPathSegment("search");
+            return _ComEvntDe;
+        }
+        public static string EvoteAgencyLock()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("event").AppendPathSegment("lock");
+            return _ComEvntDe;
+        }
+        public static string EvoteAgencyUnLock()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("event").AppendPathSegment("unlock");
+            return _ComEvntDe;
+        }
+
+
+
+        public static string UpdateGetVc()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("vc");
+            return _ComEvntDe;
+        }
+        public static string Listofspeaker()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("event").AppendPathSegment("speakerlist");
+            return _ComEvntDe;
+        }
+        public static string Listofpanelist()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("event").AppendPathSegment("panelist");
+            return _ComEvntDe;
+        }
+        public static string addUpdateSpeaker()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("event").AppendPathSegment("speaker");
+            return _ComEvntDe;
+        }
+        
     }
 }

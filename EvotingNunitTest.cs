@@ -45,15 +45,17 @@ namespace Evoting_Nunit_test
             await company.callScrutinizersecond();
             await company.callCustRegistration();
             await company.callCustodion();
+            await company.callEvoteAgency();
         }
 
-        //[Test, Order(1)]
-        //public async Task AddOfFlow()
-        //{
-        //    CompanyUnitTest company = new CompanyUnitTest();
-        //    await company.callCustRegistration();
-        //    await company.callCustodion();
-        //}
+       // [Test, Order(1)]
+        public async Task AddOfFlow()
+        {
+            CompanyUnitTest company = new CompanyUnitTest();
+            //await company.callInvestor();
+            await company.callScrutinizersecond();
+
+        }
     }
 }
 
