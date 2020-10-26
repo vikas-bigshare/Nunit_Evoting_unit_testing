@@ -123,7 +123,8 @@ namespace Evoting_Nunit_test
         //}
         public void romuploadfile_eventid_change()
         {
-           string filepath = "C:\\Evoting-Github\\Files\\CDSLForTest.txt";
+            //string filepath = "C:\\Evoting-Github\\Files\\CDSLForTest.txt";
+            string filepath = "C:\\Evoting-Github\\Files\\Com_Rom_10records.txt";
             string Romfile = "C:\\Evoting-Github\\Rom_uploadedFiles\\";
             using (StreamReader sr = new System.IO.StreamReader(filepath))
             {
@@ -200,7 +201,9 @@ namespace Evoting_Nunit_test
         {
            
            ScrutinizerUnitTest scrutinizerUnit = new ScrutinizerUnitTest(event_id);
-            await scrutinizerUnit.Test_ScrutLogin(scrut_UserId);
+           // await scrutinizerUnit.Test_ScrutLogin(scrut_UserId);
+            await scrutinizerUnit.Test_ScrutLogin("S300000000000174");
+            
             await scrutinizerUnit.Test_postdownloadagreement();
             await scrutinizerUnit.Test_uploadagreement();
             await scrutinizerUnit.Test_getdownloadagreement();
@@ -230,7 +233,9 @@ namespace Evoting_Nunit_test
         public async Task callCustodion()
         {
             CustodianUnitTest ObjCusto = new CustodianUnitTest(event_id);
-            await ObjCusto.Test_CustodianLogin(Cust_UserId);
+           //CustodianUnitTest ObjCusto = new CustodianUnitTest("50175");
+             await ObjCusto.Test_CustodianLogin(Cust_UserId);
+           //await ObjCusto.Test_CustodianLogin("T400000000000025");
             await ObjCusto.Test_CustodianFileUpload();
             await ObjCusto.Test_CustodianPOAUpload();
             await ObjCusto.Test_CustodianFileUpload2();
@@ -241,7 +246,7 @@ namespace Evoting_Nunit_test
         {
             EvoteAgencyUnitTest ObjEvotAgency = new EvoteAgencyUnitTest(event_id);
             await ObjEvotAgency.Test_EvotAgencyLogin();
-            // await ObjEvotAgency.Test_AccountList();
+            await ObjEvotAgency.Test_AccountList();
             await ObjEvotAgency.Test_AccountLock();
             await ObjEvotAgency.Test_AccountUnlock();
             await ObjEvotAgency.Test_GetAccount();

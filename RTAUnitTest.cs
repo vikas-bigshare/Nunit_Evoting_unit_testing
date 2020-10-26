@@ -86,7 +86,8 @@ namespace Evoting_Nunit_test
         //}
         public void romuploadfile_eventid_change()
         {
-            string filepath = "C:\\Evoting-Github\\Files\\CDSLForTest.txt";
+            // string filepath = "C:\\Evoting-Github\\Files\\CDSLForTest.txt";
+            string filepath = "C:\\Evoting-Github\\Files\\RTA_Rom10record.txt";
             string Romfile = "C:\\Evoting-Github\\Rom_uploadedFiles\\";
             using (StreamReader sr = new System.IO.StreamReader(filepath))
             {

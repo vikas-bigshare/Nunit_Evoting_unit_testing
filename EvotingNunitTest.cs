@@ -39,23 +39,24 @@ namespace Evoting_Nunit_test
             company.romuploadfile_eventid_change();
             await company.Test_PostNewgeneratedFileUpload();
             await company.Test_postROMupload();
-            await company.Test_postApprovedEvent();
             await company.callRTAsecond();
+            await company.Test_postApprovedEvent();
             await company.callInvestor();
-            await company.callScrutinizersecond();
             await company.callCustRegistration();
             await company.callCustodion();
+            await company.callScrutinizersecond();
+
             await company.callEvoteAgency();
         }
 
-       // [Test, Order(1)]
-        public async Task AddOfFlow()
-        {
-            CompanyUnitTest company = new CompanyUnitTest();
-            //await company.callInvestor();
-            await company.callScrutinizersecond();
+        //[Test, Order(1)]
+        //public async Task AddOfFlow()
+        //{
+        //    CompanyUnitTest company = new CompanyUnitTest();
+        //    //await company.callScrutinizer();
+        //    await company.callScrutinizersecond();
 
-        }
+        //}
     }
 }
 
