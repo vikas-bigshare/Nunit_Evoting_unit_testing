@@ -35,6 +35,7 @@ namespace Evoting_Nunit_test
             await company.Test_getdownloadagreement();
             await company.Test_Postgenerateevent();
             await company.Test_Geteventlistcurrent();
+            await company.Test_Geteventlistpast();
             await company.Test_Putgenerateevent();
             company.romuploadfile_eventid_change();
             await company.Test_PostNewgeneratedFileUpload();
@@ -45,7 +46,6 @@ namespace Evoting_Nunit_test
             await company.callCustRegistration();
             await company.callCustodion();
             await company.callScrutinizersecond();
-
             await company.callEvoteAgency();
         }
 
@@ -53,9 +53,9 @@ namespace Evoting_Nunit_test
         //public async Task AddOfFlow()
         //{
         //    CompanyUnitTest company = new CompanyUnitTest();
-        //    //await company.callScrutinizer();
-        //    await company.callScrutinizersecond();
-
+        //     await company.Test_CompanyLogin("");
+         //      await company.callScrutinizer();
+        //    await company.Test_Postgenerateevent();
         //}
     }
 }

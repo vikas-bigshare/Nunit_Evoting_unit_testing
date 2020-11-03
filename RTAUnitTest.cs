@@ -122,7 +122,7 @@ namespace Evoting_Nunit_test
         }
         public async Task Test_postROMupload()
         {
-            var check = await _objcom.Post_Rom_Upload(RTA.romupload(event_id, filedocid), token);
+            var check = await _objcom.Post_Rom_Upload(RTA.romupload(event_id, filedocid,"notice"), token);
             RTA_Module.RTA_PostROMUpload.Root someval = JsonConvert.DeserializeObject<RTA_Module.RTA_PostROMUpload.Root>(check);
             Assert.IsNotNull(someval.message);
             Assert.AreEqual("ROM Uploaded succesfully", someval.data.Remark);

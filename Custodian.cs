@@ -92,13 +92,13 @@ namespace Evoting_Nunit_test
                           .AddString("upload_type", "POA")).ReceiveString();
             return get_url1;
         }
-        public async Task<dynamic> Post_CustFileUpload(string token)
+        public async Task<dynamic> Post_CustFileUpload(string token,string file)
         {
             //var get_url1 = await CommanUrl.ComFileUpload().WithOAuthBearerToken(token).PostMultipartAsync(x =>
             //              x.AddFile("files", @"C:\Evoting-Github\Files\Sample_file_for_Custodian.txt")
             //              .AddString("upload_type", "ROM")).ReceiveString();
             var get_url1 = await CommanUrl.ComFileUpload().WithOAuthBearerToken(token).PostMultipartAsync(x =>
-                         x.AddFile("files", @"C:\Evoting-Github\Files\Cust39record.txt")
+                         x.AddFile("files", file)
                          .AddString("upload_type", "ROM")).ReceiveString();
             return get_url1;
         }

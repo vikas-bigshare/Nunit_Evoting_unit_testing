@@ -31,7 +31,7 @@ namespace Evoting_Nunit_test
             resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = 65, resolution_id = 1, title = "title1", description = "description1" });
             resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = 66, resolution_id = 2, title = "title2", description = "description2" });
             resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = 67, resolution_id = 3, title = "title3", description = "description3" });
-            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = 69, resolution_id = 4, title = "title4", description = "description4" });
+            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = 68, resolution_id = 4, title = "title4", description = "description4" });
 
             return new FJC_UpdateEVENT()
             {
@@ -67,12 +67,13 @@ namespace Evoting_Nunit_test
                 PAN_ID = "XXXXXXXXXX"
             };
         }
-        public static FJC_ROMUpload romupload(string event_id, int filedocid)
+        public static FJC_ROMUpload romupload(string event_id, int filedocid,string uploadtype)
         {
             return new FJC_ROMUpload()
             {
                 event_id = Convert.ToInt32(event_id),
                 doc_id = filedocid,
+                upload_type= uploadtype
             };
         }
         public static FJC_Registration Registration()

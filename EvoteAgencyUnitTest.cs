@@ -35,7 +35,7 @@ namespace Evoting_Nunit_test
         {
             var check = await _objcom.Post_Login(Evote_Agency.Default_user());
             EvoteAgency_Module.EvoteAgency_Login.Root someval = JsonConvert.DeserializeObject<EvoteAgency_Module.EvoteAgency_Login.Root>(check);
-            Assert.AreEqual("User logged in succesfully", someval.message);
+            Assert.AreEqual("User logged in successfully", someval.message);
             token = someval.data.Token;
         }
         public async Task Test_AccountList()
@@ -65,7 +65,7 @@ namespace Evoting_Nunit_test
         }
         public async Task Test_PostAccountSearch()
         {
-            var check = await _objcom.Post_Accountsearch(token);
+            var check = await _objcom.Post_Accountsearch(Evote_Agency.Account_Search(),token);
             EvoteAgency_Module.EvoteAgency_AccountSearch.Root someval = JsonConvert.DeserializeObject<EvoteAgency_Module.EvoteAgency_AccountSearch.Root>(check);
         }
     }

@@ -24,6 +24,12 @@ namespace Evoting_Nunit_test
             return new FJC_LoginRequest()
             { UserID = "A700000000000001", system_ip = "127.0.0.1", encrypt_Password = "bigshare@123" };
         }
+
+        public static FJC_AccountSearch Account_Search()
+        {
+            return new FJC_AccountSearch()
+            { user_type = 3, str = "ad" };
+        }
         public async Task<dynamic> Post_Login(FJC_LoginRequest _fjc_login)
         {
             var get_url1 = await CommanUrl.Login().PostJsonAsync(_fjc_login).ReceiveString();
@@ -31,7 +37,7 @@ namespace Evoting_Nunit_test
         }
         public async Task<dynamic> Get_AccountList(string token)
         {
-            var get_url1 = await CommanUrl.AccountList().WithOAuthBearerToken(token).SetQueryParam("user_type", 1).GetJsonAsync();
+            var get_url1 = await CommanUrl.AccountList().WithOAuthBearerToken(token).SetQueryParam("user_type", 1).GetStringAsync();
             return get_url1;
         }
         public async Task<dynamic> Post_EvoteAgencyLock(string token,int event_id)
@@ -46,7 +52,7 @@ namespace Evoting_Nunit_test
         }
         public async Task<dynamic> Get_AccountProfile(string token)
         {
-            var get_url1 = await CommanUrl.GetAccount().WithOAuthBearerToken(token).SetQueryParam("aud_id", 13).GetJsonAsync();
+            var get_url1 = await CommanUrl.GetAccount().WithOAuthBearerToken(token).SetQueryParam("aud_id", 13).GetStringAsync();
             return get_url1;
         }
         public async Task<dynamic> Post_AccountVerify(string token)
@@ -54,9 +60,9 @@ namespace Evoting_Nunit_test
             var get_url1 = await CommanUrl.Accountverify().WithOAuthBearerToken(token).SetQueryParam("aud_id", 13).PostJsonAsync("").ReceiveString();
             return get_url1;
         }
-        public async Task<dynamic> Post_Accountsearch(string token)
+        public async Task<dynamic> Post_Accountsearch(FJC_AccountSearch fJC_AccountSearch ,string token)
         {
-            var get_url1 = await CommanUrl.Accountsearch().WithOAuthBearerToken(token).PostJsonAsync("").ReceiveString();
+            var get_url1 = await CommanUrl.Accountsearch().WithOAuthBearerToken(token).PostJsonAsync(fJC_AccountSearch).ReceiveString();
             return get_url1;
         }
     }

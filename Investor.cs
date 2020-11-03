@@ -52,7 +52,6 @@ namespace Evoting_Nunit_test
             FJC_Resolutions_Vote.Add(new FJC_Resolutions_Vote() { resolution_id = 73, in_favour = 50, not_in_favour = 50, abstain = 0 });
             return new FJC_Vote_Investor()
             {
-               
                 event_id = Convert.ToInt32(event_id),
                 submitted=1,
                 resolutions = FJC_Resolutions_Vote.ToArray()
@@ -64,7 +63,7 @@ namespace Evoting_Nunit_test
         {
             return new FJC_SpeakerRegister()
             {
-                event_id = event_id,
+                event_id =Convert.ToInt32(event_id),
                 email = "vikasp@bigshareonline.com"
             };
         }

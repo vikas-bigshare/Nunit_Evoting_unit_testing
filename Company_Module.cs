@@ -90,13 +90,21 @@ namespace Evoting_Nunit_test
         }
         public class Com_getdownloadagreement
         {
+            public class Datum
+            {
+                public int doc_no { get; set; }
+                public string file_name { get; set; }
+                public string url { get; set; }
+            }
+
             public class Root
             {
                 public int statusCode { get; set; }
                 public string message { get; set; }
-                public List<object> data { get; set; }
+                public List<Datum> data { get; set; }
             }
         }
+
         public class Com_GenerateEvent
         {
             public class Data
@@ -113,6 +121,29 @@ namespace Evoting_Nunit_test
                 public string message { get; set; }
                 public Data data { get; set; }
             }
+        }
+
+        public class Com_EventList_current
+        {
+            public class Datum
+            {
+                public int serial_id { get; set; }
+                public int evoting_id { get; set; }
+                public string event_type { get; set; }
+                public int event_id { get; set; }
+                public DateTime cut_of_date { get; set; }
+                public string status { get; set; }
+                public int isin_type_id { get; set; }
+                public string Isin_type { get; set; }
+                public string event_name { get; set; }
+            }
+
+            public class Root
+            {
+                public int statusCode { get; set; }
+                public List<Datum> data { get; set; }
+            }
+
         }
         public class Com_Putgenerateevent
         {

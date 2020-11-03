@@ -36,7 +36,7 @@ namespace Evoting_Nunit_test
             var check = await _objcom.Post_Login(Investor.Default_user());
             Investor_Modules.Investor_Login.Root someval = JsonConvert.DeserializeObject<Investor_Modules.Investor_Login.Root>(check);
             token = someval.data.Token;
-            Assert.AreEqual("User logged in succesfully", someval.message);
+            Assert.AreEqual("User logged in successfully", someval.message);
         }
         public async Task Post_InvestorVoting()
         {

@@ -81,11 +81,11 @@ namespace Evoting_Nunit_test
         }
         public static FJC_SharedHolder_Restrict scrutrestrict(string event_id)
         {
-            return new  FJC_SharedHolder_Restrict()
-                {
+            return new FJC_SharedHolder_Restrict()
+            {
                 event_id = Convert.ToInt32(event_id),
-                dpcl= "IN30011810974875",  //userid  investor in rom uploaded file
-                remark= "scrutrestrict"
+                dpcl = "1304140007721714",        //1304140007721714 "IN30011810974875",  //IN30302859904648   userid  investor in rom uploaded file
+                remark = "scrutrestrict"
             };
         }
 

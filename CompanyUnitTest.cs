@@ -59,10 +59,11 @@ namespace Evoting_Nunit_test
      
         public async Task Test_CompanyLogin()
         {
-            var check = await _objcom.Post_Login(Company.Default_user(userid));
+            var check = await _objcom.Post_Login(Company.Default_user(userid));   
+           // var check = await _objcom.Post_Login(Company.Default_user("C100000000000305"));
             Company_Module.Company_Login.Root someval = JsonConvert.DeserializeObject<Company_Module.Company_Login.Root>(check);
             Assert.IsNotNull(someval.data.token);
-            Assert.AreEqual("User logged in succesfully", someval.message);
+            Assert.AreEqual("User logged in successfully", someval.message);
             token = someval.data.token;
         }
       
@@ -85,9 +86,9 @@ namespace Evoting_Nunit_test
         public async Task Test_getdownloadagreement()
         {
             var check = await _objcom.Get_Docdownload(token);
-            //Company_Module.Com_getdownloadagreement.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_getdownloadagreement.Root>(check);
-            Assert.IsNotNull(check.message);
-            Assert.AreEqual(200, check.statusCode);
+            Company_Module.Com_getdownloadagreement.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_getdownloadagreement.Root>(check);
+            Assert.IsNotNull(someval.message);
+            Assert.AreEqual(200, someval.statusCode);
         }
 
         public async Task Test_Postgenerateevent()
@@ -98,14 +99,19 @@ namespace Evoting_Nunit_test
             Assert.AreEqual(200, someval.statusCode);
             event_id =Convert.ToString(someval.data.Event_Id);
         }
-      
         public async Task Test_Geteventlistcurrent()
         {
             var check = await _objcom.Get_EventList("current", token);
-            Assert.IsNotNull(check.message);
-            Assert.AreEqual(200, check.statusCode);
+            Company_Module.Com_EventList_current.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_EventList_current.Root>(check);
+            Assert.AreEqual(200, someval.statusCode);
         }
-     
+
+        public async Task Test_Geteventlistpast()
+        {
+            var check = await _objcom.Get_EventList("past", token);
+            Company_Module.Com_EventList_current.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_EventList_current.Root>(check);
+            Assert.AreEqual(200, someval.statusCode);
+        }
         public async Task Test_Putgenerateevent()
         {
             var check = await _objcom.Put_Company_Eventdetails(Company.Com_event_detail(event_id, scrut_rowid), token);
@@ -158,7 +164,7 @@ namespace Evoting_Nunit_test
         }
         public async Task Test_postROMupload()
         {
-            var check = await _objcom.Post_Rom_Upload(Company.romupload(event_id, filedocid), token);
+            var check = await _objcom.Post_Rom_Upload(Company.romupload(event_id, filedocid,"notice"), token);
             Company_Module.Com_PostROMUpload.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_PostROMUpload.Root>(check);
             Assert.IsNotNull(someval.message);
             Assert.AreEqual("ROM Uploaded succesfully", someval.data.Remark);
@@ -201,8 +207,8 @@ namespace Evoting_Nunit_test
         {
            
            ScrutinizerUnitTest scrutinizerUnit = new ScrutinizerUnitTest(event_id);
-           // await scrutinizerUnit.Test_ScrutLogin(scrut_UserId);
-            await scrutinizerUnit.Test_ScrutLogin("S300000000000174");
+            await scrutinizerUnit.Test_ScrutLogin(scrut_UserId);
+           // await scrutinizerUnit.Test_ScrutLogin("S300000000000174");
             
             await scrutinizerUnit.Test_postdownloadagreement();
             await scrutinizerUnit.Test_uploadagreement();
@@ -238,6 +244,7 @@ namespace Evoting_Nunit_test
            //await ObjCusto.Test_CustodianLogin("T400000000000025");
             await ObjCusto.Test_CustodianFileUpload();
             await ObjCusto.Test_CustodianPOAUpload();
+             ObjCusto.Cust_uploadfile_eventid_change();
             await ObjCusto.Test_CustodianFileUpload2();
             await ObjCusto.Test_CustodianVotfileupload();
 

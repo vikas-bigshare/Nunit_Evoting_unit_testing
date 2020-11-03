@@ -16,9 +16,9 @@ namespace Evoting_Nunit_test
     {
         //const string DefaultUrl = "http://evoting.bigshareonline.com";
         //const string DefaultUrl = "https://evoting.bigshareonline.com:6001";
-        const string DefaultUrl = "https://evoting.bigshareonline.com";
+       const string DefaultUrl = "https://evoting.bigshareonline.com";
         //const string DefaultUrl = "http://bigshareonline.com:6001";
-       //const string DefaultUrl = "http://localhost:6000";
+       // const string DefaultUrl = "http://localhost:6000";
 
         //////////////////////////////////////////////////////company/////////////////////////////////////////////
         public static string Login()

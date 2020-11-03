@@ -63,8 +63,8 @@ namespace Evoting_Nunit_test
                 voting_start_datetime = "",
                 voting_end_datetime = "",
                 meeting_datetime = "",
-                last_date_notice = "",
-                voting_result_date = "",
+                last_date_notice = "2020-09-1",
+                voting_result_date = "2020-09-10",
                 upload_logo = 1,
                 upload_resolution_file = 3,
                 upload_notice = 2,
@@ -73,12 +73,13 @@ namespace Evoting_Nunit_test
             };
 
         }
-        public static FJC_ROMUpload romupload(string event_id, int filedocid)
+        public static FJC_ROMUpload romupload(string event_id, int filedocid,string uploadNotice)
         {
             return new FJC_ROMUpload()
             {
                 event_id = Convert.ToInt32(event_id),
                 doc_id = filedocid,
+                upload_type = uploadNotice
             };
         }
         public static FJC_ChangePassword change_password()
@@ -256,8 +257,8 @@ namespace Evoting_Nunit_test
         }
         public async Task<dynamic> Get_EventList(string str,string token)
         {
-            var get_url1 = await CommanUrl.EventList().WithOAuthBearerToken(token).SetQueryParam("str", str).GetJsonAsync();
-            var message = get_url1.message;
+            var get_url1 = await CommanUrl.EventList().WithOAuthBearerToken(token).SetQueryParam("str", str).GetStringAsync();
+            //var message = get_url1.message;
             return get_url1;
         }
         public async Task<dynamic> Post_ChangePasssword(FJC_ChangePassword fJC_ChangePassword)
@@ -304,11 +305,13 @@ namespace Evoting_Nunit_test
       
         public async Task<dynamic> Get_Docdownload(string token)
         {
-            var get_url1 = await CommanUrl.DocUpload().WithOAuthBearerToken(token).GetJsonAsync();
-            return get_url1;
+            var get_url1 = await CommanUrl.DocDownload().WithOAuthBearerToken(token).GetStringAsync();
+            return  get_url1;
+          
         }
         public async Task<dynamic> Post_Docdownload(string DownloadType,string token)   //tri_partiate_agreement
         {
+           // var get_url1 = await CommanUrl.DocDownload().WithOAuthBearerToken(token).SetQueryParam("DownloadType", DownloadType).PostJsonAsync("").ReceiveString();
             var get_url1 = await CommanUrl.DocDownload().WithOAuthBearerToken(token).SetQueryParam("DownloadType", DownloadType).PostJsonAsync("").ReceiveString();
             return get_url1;
         }
