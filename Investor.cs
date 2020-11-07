@@ -46,10 +46,10 @@ namespace Evoting_Nunit_test
         public static FJC_Vote_Investor VoteInvestore(string event_id)
         {
             List<FJC_Resolutions_Vote> FJC_Resolutions_Vote = new List<FJC_Resolutions_Vote>();
-            FJC_Resolutions_Vote.Add(new FJC_Resolutions_Vote() { resolution_id = 70, in_favour = 50, not_in_favour = 50, abstain = 0 });
-            FJC_Resolutions_Vote.Add(new FJC_Resolutions_Vote() { resolution_id = 71, in_favour = 50, not_in_favour = 50, abstain = 0 });
-            FJC_Resolutions_Vote.Add(new FJC_Resolutions_Vote() { resolution_id = 72, in_favour = 50, not_in_favour = 50, abstain = 0 });
-            FJC_Resolutions_Vote.Add(new FJC_Resolutions_Vote() { resolution_id = 73, in_favour = 50, not_in_favour = 50, abstain = 0 });
+            FJC_Resolutions_Vote.Add(new FJC_Resolutions_Vote() { resolution_id = 1, in_favour = 50, not_in_favour = 50, abstain = 0 });
+            FJC_Resolutions_Vote.Add(new FJC_Resolutions_Vote() { resolution_id = 2, in_favour = 50, not_in_favour = 50, abstain = 0 });
+            FJC_Resolutions_Vote.Add(new FJC_Resolutions_Vote() { resolution_id = 3, in_favour = 50, not_in_favour = 50, abstain = 0 });
+            FJC_Resolutions_Vote.Add(new FJC_Resolutions_Vote() { resolution_id = 4, in_favour = 50, not_in_favour = 50, abstain = 0 });
             return new FJC_Vote_Investor()
             {
                 event_id = Convert.ToInt32(event_id),

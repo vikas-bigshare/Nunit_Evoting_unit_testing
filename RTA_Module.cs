@@ -163,5 +163,63 @@ namespace Evoting_Nunit_test
             }
         }
 
+        public class RTA_Put_Profile
+        {
+            public class Data
+            {
+                public string Column1 { get; set; }
+            }
+
+            public class Root
+            {
+                public int statusCode { get; set; }
+                public string message { get; set; }
+                public Data data { get; set; }
+            }
+        }
+
+        public class RTA_Get_Profile
+        {
+            public class Data
+            {
+                public int aud_id { get; set; }
+                public int reg_type_id { get; set; }
+                public string name { get; set; }
+                public string reg_no { get; set; }
+                public string reg_add1 { get; set; }
+                public string reg_add2 { get; set; }
+                public string reg_add3 { get; set; }
+                public string reg_city { get; set; }
+                public string reg_pincode { get; set; }
+                public int reg_state_id { get; set; }
+                public string reg_country_id { get; set; }
+                public string corres_add1 { get; set; }
+                public string corres_add2 { get; set; }
+                public string corres_add3 { get; set; }
+                public string corres_city { get; set; }
+                public string corres_pincode { get; set; }
+                public int corres_state_id { get; set; }
+                public string corres_country_id { get; set; }
+                public string pcs_no { get; set; }
+                public string cs_name { get; set; }
+                public string cs_email_id { get; set; }
+                public string cs_alt_email_id { get; set; }
+                public string cs_tel_no { get; set; }
+                public string cs_fax_no { get; set; }
+                public string cs_mobile_no { get; set; }
+                public string panid { get; set; }
+                public string alt_mob_num { get; set; }
+                public int rta_id { get; set; }
+            }
+
+            public class Root
+            {
+                public int statusCode { get; set; }
+                public string message { get; set; }
+                public Data data { get; set; }
+            }
+
+        }
+
     }
 }

@@ -133,5 +133,21 @@ namespace Evoting_Nunit_test
                 public List<Datum> data { get; set; }
             }
         }
+
+
+        public class EvoteAgency_Intimation
+        {
+            public class Data
+            {
+                public string Remark { get; set; }
+            }
+
+            public class Root
+            {
+                public int statusCode { get; set; }
+                public string message { get; set; }
+                public Data data { get; set; }
+            }
+        }
     }
 }

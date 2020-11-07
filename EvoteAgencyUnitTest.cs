@@ -68,5 +68,11 @@ namespace Evoting_Nunit_test
             var check = await _objcom.Post_Accountsearch(Evote_Agency.Account_Search(),token);
             EvoteAgency_Module.EvoteAgency_AccountSearch.Root someval = JsonConvert.DeserializeObject<EvoteAgency_Module.EvoteAgency_AccountSearch.Root>(check);
         }
+
+        //public async Task Test_Postintimation()
+        //{
+        //    var check = await _objcom.Post_intimation(Evote_Agency.intimation(), token);
+        //    EvoteAgency_Module.EvoteAgency_Intimation.Root someval = JsonConvert.DeserializeObject<EvoteAgency_Module.EvoteAgency_Intimation.Root>(check);
+        //}
     }
 }

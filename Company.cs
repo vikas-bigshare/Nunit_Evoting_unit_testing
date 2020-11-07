@@ -38,18 +38,18 @@ namespace Evoting_Nunit_test
                 type_evoting = 1,
                 total_nof_share = 10000,
                 voting_rights = 1,
-                cut_of_date = "2020-08-30",
+                cut_of_date = "2020-11-05",
                 scrutinizer = scrut_rowid
             };
 
         }
-        public static FJC_CompanyUpdate_Event Com_event_detail(string event_id, int scrut_rowid)  //=39370
+        public static FJC_CompanyUpdate_Event Com_event_detail(string event_id, int scrut_rowid,int uploadlogo,int resolution,int notice)  //=39370
         {
             List<FJC_Resolutions_Data> resolutions_Datas = new List<FJC_Resolutions_Data>();
-            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = 65, resolution_id = 1, title = "title1", description = "description1" });
-            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = 66, resolution_id = 2, title = "title2", description = "description2" });
-            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = 67, resolution_id = 3, title = "title3", description = "description3" });
-            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = 69, resolution_id = 4, title = "title4", description = "description4" });
+            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = resolution, resolution_id = 1, title = "title1", description = "description1" });
+            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = resolution, resolution_id = 2, title = "title2", description = "description2" });
+            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = resolution, resolution_id = 3, title = "title3", description = "description3" });
+            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = resolution, resolution_id = 4, title = "title4", description = "description4" });
             return new FJC_CompanyUpdate_Event()
             {
                 event_id =Convert.ToInt32(event_id),
@@ -60,15 +60,15 @@ namespace Evoting_Nunit_test
                 voting_rights = 1,
                 cut_of_date = "2020-08-31",
                 scrutinizer = scrut_rowid,
-                voting_start_datetime = "",
-                voting_end_datetime = "",
-                meeting_datetime = "",
+                voting_start_datetime = "Oct 29 2020 10:15AM",
+                voting_end_datetime = "Oct 29 2020 12:00PM",
+                meeting_datetime = "Oct 25 2020 12:00PM",
                 last_date_notice = "2020-09-1",
                 voting_result_date = "2020-09-10",
-                upload_logo = 1,
-                upload_resolution_file = 3,
-                upload_notice = 2,
-                enter_nof_resolution = 9,
+                upload_logo = uploadlogo,
+                upload_resolution_file = resolution,
+                upload_notice = notice,
+                enter_nof_resolution = 4,
                 resolutions = resolutions_Datas.ToArray()
             };
 
@@ -113,15 +113,15 @@ namespace Evoting_Nunit_test
                 reg_add3 = "virar",
                 reg_city = "palghar",
                 reg_pincode = "401303",
-                reg_state_id = 4,
-                reg_country_id = 1,
+                reg_state_id = 1646,
+                reg_country_id = 101,
                 corres_add1 = "Mumbai",
                 corres_add2 = "vasai",
                 corres_add3 = "virar",
                 corres_city = "palghar",
                 corres_pincode = "401303",
-                corres_state_id = 6,
-                corres_country_id = 1,
+                corres_state_id = 1646,
+                corres_country_id = 101,
                 pcs_no = "000001",
                 cs_name = "Shivkumar",
                 cs_email_id = "shivkumar@bigshareonline.com",
@@ -129,13 +129,13 @@ namespace Evoting_Nunit_test
                 cs_tel_no = "234234",
                 cs_fax_no = "23423",
                 cs_mobile_no = "1234567890",
-                panid = "XXXXXXXX10",
+                panid = "XXXXX0000X",
                 alt_mob_num = "9022120324",
                 rta_id = rtaAudid
             };
 
         }
-        public static FJC_Registration Profile()
+        public static FJC_Registration Profile(int rtaAudid)
         {
             return new FJC_Registration()
             {
@@ -148,15 +148,15 @@ namespace Evoting_Nunit_test
                 reg_add3 = "Mumbai",
                 reg_city = "Mumbai",
                 reg_pincode = "401001",
-                reg_state_id = 4,
-                reg_country_id = 1,
+                reg_state_id = 1646,
+                reg_country_id = 101,
                 corres_add1 = "Mumbai1",
                 corres_add2 = "Mumbai1",
                 corres_add3 = "Mumbai1",
                 corres_city = "Mumbai",
                 corres_pincode = "401002",
-                corres_state_id = 6,
-                corres_country_id = 1,
+                corres_state_id = 1646,
+                corres_country_id = 101,
                 pcs_no = "000001",
                 cs_name = "Shivkumar",
                 cs_email_id = "shivkumar@bigshareonline.com",
@@ -164,9 +164,9 @@ namespace Evoting_Nunit_test
                 cs_tel_no = "234234",
                 cs_fax_no = "23423",
                 cs_mobile_no = "1234567890",
-                panid = "XXXXXXXX10",
+                panid = "XXXXX0000X",
                 alt_mob_num = "9022120324",
-                rta_id = 15,
+                rta_id = rtaAudid,
              
         };
 
@@ -210,6 +210,27 @@ namespace Evoting_Nunit_test
         {
             var get_url1 = await CommanUrl.ComFileUpload().WithOAuthBearerToken(token).SetQueryParam("doc_id", event_id).GetJsonAsync();
             var message = get_url1.data.file_name;
+            return get_url1;
+        }
+        public async Task<dynamic> Post_LogoUpload(string token)
+        {
+            var get_url1 = await CommanUrl.ComFileUpload().WithOAuthBearerToken(token).PostMultipartAsync(x =>
+                            x.AddFile("files", @"C:\Evoting-Github\Files\sample_Logo.jpg")
+                            .AddString("upload_type", "Logo")).ReceiveString();
+            return get_url1;
+        }
+        public async Task<dynamic> Post_ResolutionUpload(string token)
+        {
+            var get_url1 = await CommanUrl.ComFileUpload().WithOAuthBearerToken(token).PostMultipartAsync(x =>
+                            x.AddFile("files", @"C:\Evoting-Github\Files\Resolution File.docx")
+                            .AddString("upload_type", "ResolutionFile")).ReceiveString();
+            return get_url1;
+        }
+        public async Task<dynamic> Post_NoticeUpload(string token)
+        {
+            var get_url1 = await CommanUrl.ComFileUpload().WithOAuthBearerToken(token).PostMultipartAsync(x =>
+                            x.AddFile("files", @"C:\Evoting-Github\Files\dummy_POA_20201008_1203600001711415.pdf")
+                            .AddString("upload_type", "Notice")).ReceiveString();
             return get_url1;
         }
         public async Task<dynamic> Post_FileUpload(string token)
@@ -309,21 +330,22 @@ namespace Evoting_Nunit_test
             return  get_url1;
           
         }
+       
+
         public async Task<dynamic> Post_Docdownload(string DownloadType,string token)   //tri_partiate_agreement
         {
            // var get_url1 = await CommanUrl.DocDownload().WithOAuthBearerToken(token).SetQueryParam("DownloadType", DownloadType).PostJsonAsync("").ReceiveString();
             var get_url1 = await CommanUrl.DocDownload().WithOAuthBearerToken(token).SetQueryParam("DownloadType", DownloadType).PostJsonAsync("").ReceiveString();
             return get_url1;
         }
-        public async Task<dynamic> Put_Prifile(FJC_Registration fJC_Registration)
+        public async Task<dynamic> Put_Profile(FJC_Registration fJC_Registration,string token)
         {
             var get_url1 = await CommanUrl.userprofile().WithOAuthBearerToken(token).PutJsonAsync(fJC_Registration).ReceiveString();
-            return JsonConvert.DeserializeObject<ExpandoObject>(get_url1, new ExpandoObjectConverter());
+            return get_url1;
         }
-        public async Task<dynamic> Get_Prifile()
+        public async Task<dynamic> Get_Profile(string token)
         {
-            var get_url1 = await CommanUrl.userprofile().WithOAuthBearerToken(token).GetJsonAsync();
-            var message = get_url1.message;
+            var get_url1 = await CommanUrl.userprofile().WithOAuthBearerToken(token).GetStringAsync();
             return get_url1;
         }
     }

@@ -33,9 +33,14 @@ namespace Evoting_Nunit_test
             await company.Test_postdownloadagreement();
             await company.Test_uploadagreement();
             await company.Test_getdownloadagreement();
+            await company.Test_Putprofile();
+            await company.Test_Get_Prifile();
             await company.Test_Postgenerateevent();
             await company.Test_Geteventlistcurrent();
             await company.Test_Geteventlistpast();
+            await company.Test_PostLogoFileUpload();
+            await company.Test_PostResolutionFileUpload();
+            await company.Test_PostNoticeFileUpload();
             await company.Test_Putgenerateevent();
             company.romuploadfile_eventid_change();
             await company.Test_PostNewgeneratedFileUpload();

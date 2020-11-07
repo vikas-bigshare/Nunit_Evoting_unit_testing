@@ -25,25 +25,25 @@ namespace Evoting_Nunit_test
             { UserID = userid, system_ip = "127.0.0.128", encrypt_Password = "bigshare@123" };
 
         }
-        public static FJC_UpdateEVENT Update_Event(string EventId)
+        public static FJC_UpdateEVENT Update_Event(string EventId,int logoid,int reso_id,int noticeid)
         {
             List<FJC_Resolutions_Data> resolutions_Datas = new List<FJC_Resolutions_Data>();
-            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = 65, resolution_id = 1, title = "title1", description = "description1" });
-            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = 66, resolution_id = 2, title = "title2", description = "description2" });
-            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = 67, resolution_id = 3, title = "title3", description = "description3" });
-            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = 68, resolution_id = 4, title = "title4", description = "description4" });
+            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = reso_id, resolution_id = 1, title = "title123", description = "description11" });
+            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = reso_id, resolution_id = 2, title = "title213", description = "description22" });
+            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = reso_id, resolution_id = 3, title = "title321", description = "description33" });
+            resolutions_Datas.Add(new FJC_Resolutions_Data() { doc_id = reso_id, resolution_id = 4, title = "title432", description = "description44" });
 
             return new FJC_UpdateEVENT()
             {
                 event_id =Convert.ToInt32(EventId),
-                voting_start_datetime = "",
-                voting_end_datetime = "",
-                meeting_datetime = "",
-                last_date_notice = "",
-                voting_result_date = "",
-                upload_logo = 1,
-                upload_resolution_file = 3,
-                upload_notice = 2,
+                voting_start_datetime = "Oct 29 2020 10:15AM",
+                voting_end_datetime = "Oct 29 2020 12:00PM",
+                meeting_datetime = "Oct 25 2020 12:00PM",
+                last_date_notice = "2020-09-1",
+                voting_result_date = "2020-09-10",
+                upload_logo = logoid,
+                upload_resolution_file = reso_id,
+                upload_notice = noticeid,
                 enter_nof_resolution = 4,
                 resolutions_Datas = resolutions_Datas.ToArray()
             };
@@ -89,15 +89,15 @@ namespace Evoting_Nunit_test
                 reg_add3 = "Mumbai",
                 reg_city = "Mumbai",
                 reg_pincode = "401001",
-                reg_state_id = 4,
-                reg_country_id = 1,
+                reg_state_id = 1646,
+                reg_country_id = 101,
                 corres_add1 = "Mumbai1",
                 corres_add2 = "Mumbai1",
                 corres_add3 = "Mumbai1",
                 corres_city = "Mumbai",
                 corres_pincode = "401002",
-                corres_state_id = 6,
-                corres_country_id = 1,
+                corres_state_id = 1646,
+                corres_country_id = 101,
                 pcs_no = "000001",
                 cs_name = "Shivkumar",
                 cs_email_id = "shivkumar@bigshareonline.com",
@@ -122,6 +122,42 @@ namespace Evoting_Nunit_test
 
         }
 
+        public static FJC_Registration Profile()
+        {
+            return new FJC_Registration()
+            {
+                //aud_id = 0,
+                reg_type_id = 2,
+                name = "Testingcompany",
+                reg_no = "Lenovo123",
+                reg_add1 = "Mumbai",
+                reg_add2 = "Mumbai",
+                reg_add3 = "Mumbai",
+                reg_city = "Mumbai",
+                reg_pincode = "401001",
+                reg_state_id = 1646,
+                reg_country_id = 101,
+                corres_add1 = "Mumbai1",
+                corres_add2 = "Mumbai1",
+                corres_add3 = "Mumbai1",
+                corres_city = "Mumbai",
+                corres_pincode = "401002",
+                corres_state_id = 1646,
+                corres_country_id = 101,
+                pcs_no = "000001",
+                cs_name = "Shivkumar",
+                cs_email_id = "shivkumar@bigshareonline.com",
+                cs_alt_email_id = "shivkumar@bigshareonline.com",
+                cs_tel_no = "234234",
+                cs_fax_no = "23423",
+                cs_mobile_no = "1234567890",
+                panid = "XXXXX0000X",
+                alt_mob_num = "9022120324",
+                rta_id = 0,
+
+            };
+
+        }
         /////////////////////////////////////////////////////////////-RTA-/////////////////////////////////////////////////////////////
         public async Task<dynamic> Post_Login(FJC_LoginRequest _fjc_login)
         {
@@ -236,15 +272,14 @@ namespace Evoting_Nunit_test
             var get_url1 = await CommanUrl.DocDownload().WithOAuthBearerToken(token).SetQueryParam("DownloadType", DownloadType).PostJsonAsync("").ReceiveString();
             return get_url1;
         }
-        public async Task<dynamic> Put_Prifile(FJC_Registration fJC_Registration,string token)
+        public async Task<dynamic> Put_Profile(FJC_Registration fJC_Registration,string token)
         {
             var get_url1 = await CommanUrl.userprofile().WithOAuthBearerToken(token).PutJsonAsync(fJC_Registration).ReceiveString();
             return get_url1;
         }
-        public async Task<dynamic> Get_Prifile(int aud_id)
+        public async Task<dynamic> Get_Profile(string token)
         {
-            var get_url1 = await CommanUrl.userprofile().WithOAuthBearerToken(token).SetQueryParam("aud_id", aud_id).GetJsonAsync();
-            var message = get_url1.message;
+            var get_url1 = await CommanUrl.userprofile().WithOAuthBearerToken(token).GetStringAsync();
             return get_url1;
         }
     }

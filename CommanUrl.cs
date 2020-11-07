@@ -18,7 +18,7 @@ namespace Evoting_Nunit_test
         //const string DefaultUrl = "https://evoting.bigshareonline.com:6001";
        const string DefaultUrl = "https://evoting.bigshareonline.com";
         //const string DefaultUrl = "http://bigshareonline.com:6001";
-       // const string DefaultUrl = "http://localhost:6000";
+        //const string DefaultUrl = "http://localhost:6000";
 
         //////////////////////////////////////////////////////company/////////////////////////////////////////////
         public static string Login()
@@ -189,9 +189,6 @@ namespace Evoting_Nunit_test
             var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("event").AppendPathSegment("unlock");
             return _ComEvntDe;
         }
-
-
-
         public static string UpdateGetVc()
         {
             var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("vc");
@@ -212,6 +209,13 @@ namespace Evoting_Nunit_test
             var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("event").AppendPathSegment("speaker");
             return _ComEvntDe;
         }
+        public static string intimation()
+        {
+            var _ComEvntDe = DefaultUrl.AppendPathSegment("api").AppendPathSegment("event").AppendPathSegment("intimation");
+            return _ComEvntDe;
+        }
         
+
+
     }
 }

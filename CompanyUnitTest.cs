@@ -18,27 +18,30 @@ using System.Threading;
 
 namespace Evoting_Nunit_test
 {
- 
+
     public class CompanyUnitTest
     {
         Company _objcom = new Company();
-       
+
         public string token { get; set; }
         public string userid { get; set; }
         public string RTAUserId { get; set; }
         public int RTAAudId { get; set; }
         public string scrut_UserId { get; set; }
-        public int scrut_rowid{ get; set; }
+        public int scrut_rowid { get; set; }
         public string Cust_UserId { get; set; }
         public int Cust_rowid { get; set; }
         public int docno { get; set; }
         public string event_id { get; set; }
         public int filedocid { get; set; }
+        public int UploadLogodocid { get; set; }
+        public int UploadResolutiondocid { get; set; }
+        public int Uploadnoticedocid { get; set; }
         public string fileLocMove { get; set; }
-       
+
         public async Task callRTA()
         {
-            RTAUnitTest rTAUnitTestr = new RTAUnitTest(event_id);
+            RTAUnitTest rTAUnitTestr = new RTAUnitTest(event_id, UploadLogodocid, UploadResolutiondocid, Uploadnoticedocid);
             RTA_Module.RTA_Registration.Root rvalue = await rTAUnitTestr.Test_RTARegistration();
             RTAUserId = rvalue.data.UserID;
             RTAAudId = rvalue.data.aud_id;
@@ -55,18 +58,21 @@ namespace Evoting_Nunit_test
             var check = await _objcom.Post_Registration(Company.Registration(RTAAudId));
             Custodian_Module.Custodian_Registration.Root someval = JsonConvert.DeserializeObject<Custodian_Module.Custodian_Registration.Root>(check);
             userid = someval.data.UserID;
-        } 
-     
+        }
+
         public async Task Test_CompanyLogin()
         {
-            var check = await _objcom.Post_Login(Company.Default_user(userid));   
-           // var check = await _objcom.Post_Login(Company.Default_user("C100000000000305"));
+            var check = await _objcom.Post_Login(Company.Default_user(userid));
+            // var check = await _objcom.Post_Login(Company.Default_user("C100000000000305"));
             Company_Module.Company_Login.Root someval = JsonConvert.DeserializeObject<Company_Module.Company_Login.Root>(check);
             Assert.IsNotNull(someval.data.token);
             Assert.AreEqual("User logged in successfully", someval.message);
             token = someval.data.token;
         }
-      
+
+
+
+
         public async Task Test_postdownloadagreement()
         {
             var check = await _objcom.Post_Docdownload("tri_partiate_agreement", token);
@@ -79,8 +85,8 @@ namespace Evoting_Nunit_test
         {
             var check = await _objcom.Post_DocUpload(Company.Docupload(docno), token);
             Company_Module.Com_uploadagreement.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_uploadagreement.Root>(check);
-            Assert.IsNotNull( someval.message);
-            
+            Assert.IsNotNull(someval.message);
+
         }
 
         public async Task Test_getdownloadagreement()
@@ -91,13 +97,28 @@ namespace Evoting_Nunit_test
             Assert.AreEqual(200, someval.statusCode);
         }
 
+        public async Task Test_Putprofile()
+        {
+            var check = await _objcom.Put_Profile(Company.Profile(RTAAudId), token);
+            Company_Module.Com_Put_Profile.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_Put_Profile.Root>(check);
+            Assert.IsNotNull(someval.message);
+            Assert.AreEqual(200, someval.statusCode);
+        }
+
+        public async Task Test_Get_Prifile()
+        {
+            var check = await _objcom.Get_Profile(token);
+            Company_Module.Com_Get_Profile.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_Get_Profile.Root>(check);
+            Assert.IsNotNull(someval.message);
+            Assert.AreEqual(200, someval.statusCode);
+        }
         public async Task Test_Postgenerateevent()
         {
-            var check = await _objcom.Post_GenerateEvent(Company.generate_event(scrut_rowid),token);
+            var check = await _objcom.Post_GenerateEvent(Company.generate_event(scrut_rowid), token);
             Company_Module.Com_GenerateEvent.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_GenerateEvent.Root>(check);
             Assert.IsNotNull(someval.message);
             Assert.AreEqual(200, someval.statusCode);
-            event_id =Convert.ToString(someval.data.Event_Id);
+            event_id = Convert.ToString(someval.data.Event_Id);
         }
         public async Task Test_Geteventlistcurrent()
         {
@@ -112,14 +133,6 @@ namespace Evoting_Nunit_test
             Company_Module.Com_EventList_current.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_EventList_current.Root>(check);
             Assert.AreEqual(200, someval.statusCode);
         }
-        public async Task Test_Putgenerateevent()
-        {
-            var check = await _objcom.Put_Company_Eventdetails(Company.Com_event_detail(event_id, scrut_rowid), token);
-            Company_Module.Com_Putgenerateevent.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_Putgenerateevent.Root>(check);
-            Assert.IsNotNull(someval.message);
-            Assert.AreEqual(200, someval.statusCode);
-        }
-       
         //public async Task Test_PostFileUpload()
         //{
         //    var check = await _objcom.Post_FileUpload(token);
@@ -127,6 +140,40 @@ namespace Evoting_Nunit_test
         //    jsonparsingcls1 = JsonConvert.DeserializeObject<jsonparsingcls>(check);
         //    filedocid = jsonparsingcls1.Data.doc_id;
         //}
+        public async Task Test_PostLogoFileUpload()
+        {
+            var check = await _objcom.Post_LogoUpload(token);
+            Company_Module.Com_PostNewGeneratedfile.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_PostNewGeneratedfile.Root>(check);
+            Assert.IsNotNull(someval.message);
+            Assert.IsNotNull(someval.data.doc_id);
+            UploadLogodocid = someval.data.doc_id;
+        }
+        public async Task Test_PostResolutionFileUpload()
+        {
+            var check = await _objcom.Post_ResolutionUpload(token);
+            Company_Module.Com_PostNewGeneratedfile.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_PostNewGeneratedfile.Root>(check);
+            Assert.IsNotNull(someval.message);
+            Assert.IsNotNull(someval.data.doc_id);
+            UploadResolutiondocid = someval.data.doc_id;
+        }
+
+        public async Task Test_PostNoticeFileUpload()
+        {
+            var check = await _objcom.Post_NoticeUpload(token);
+            Company_Module.Com_PostNewGeneratedfile.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_PostNewGeneratedfile.Root>(check);
+            Assert.IsNotNull(someval.message);
+            Assert.IsNotNull(someval.data.doc_id);
+            Uploadnoticedocid = someval.data.doc_id;
+        }
+        public async Task Test_Putgenerateevent()
+        {
+            var check = await _objcom.Put_Company_Eventdetails(Company.Com_event_detail(event_id, scrut_rowid, UploadLogodocid, UploadResolutiondocid, Uploadnoticedocid), token);
+            Company_Module.Com_Putgenerateevent.Root someval = JsonConvert.DeserializeObject<Company_Module.Com_Putgenerateevent.Root>(check);
+            Assert.IsNotNull(someval.message);
+            Assert.AreEqual(200, someval.statusCode);
+        }
+
+       
         public void romuploadfile_eventid_change()
         {
             //string filepath = "C:\\Evoting-Github\\Files\\CDSLForTest.txt";
@@ -189,8 +236,10 @@ namespace Evoting_Nunit_test
         //}
         public async Task callRTAsecond()
         {
-            RTAUnitTest rTAUnitTest = new RTAUnitTest(event_id);
+            RTAUnitTest rTAUnitTest = new RTAUnitTest(event_id,UploadLogodocid,UploadResolutiondocid,Uploadnoticedocid);
             await rTAUnitTest.Test_RTALogin(RTAUserId);
+            await rTAUnitTest.Test_Putprofile();
+            await rTAUnitTest.Test_Get_Prifile();
             await rTAUnitTest.Test_postdownloadagreement();
             await rTAUnitTest.Test_uploadagreement();
             await rTAUnitTest.Test_getdownloadagreement();
@@ -254,7 +303,7 @@ namespace Evoting_Nunit_test
             EvoteAgencyUnitTest ObjEvotAgency = new EvoteAgencyUnitTest(event_id);
             await ObjEvotAgency.Test_EvotAgencyLogin();
             await ObjEvotAgency.Test_AccountList();
-            await ObjEvotAgency.Test_AccountLock();
+            //await ObjEvotAgency.Test_AccountLock();
             await ObjEvotAgency.Test_AccountUnlock();
             await ObjEvotAgency.Test_GetAccount();
             await ObjEvotAgency.Test_PostAccountVerify();

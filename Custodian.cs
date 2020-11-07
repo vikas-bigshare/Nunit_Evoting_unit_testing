@@ -37,15 +37,15 @@ namespace Evoting_Nunit_test
                 reg_add3 = "Mumbai",
                 reg_city = "Mumbai",
                 reg_pincode = "401001",
-                reg_state_id = 4,
-                reg_country_id = 1,
+                reg_state_id = 1646,
+                reg_country_id = 101,
                 corres_add1 = "Mumbai1",
                 corres_add2 = "Mumbai1",
                 corres_add3 = "Mumbai1",
                 corres_city = "Mumbai",
                 corres_pincode = "401002",
-                corres_state_id = 6,
-                corres_country_id = 1,
+                corres_state_id = 1646,
+                corres_country_id = 101,
                 pcs_no = "000001",
                 cs_name = "Shivkumar",
                 cs_email_id = "shivkumar@bigshareonline.com",
@@ -88,7 +88,7 @@ namespace Evoting_Nunit_test
         public async Task<dynamic> Post_FileUpload(string token)
         {
             var get_url1 = await CommanUrl.ComFileUpload().WithOAuthBearerToken(token).PostMultipartAsync(x =>
-                          x.AddFile("files", @"C:\Evoting-Github\Files\dummy_POA_20201008_1201060500039425.pdf")
+                          x.AddFile("files", @"C:\Evoting-Github\Files\dummy_POA_06112020_IN30088813445440.pdf")
                           .AddString("upload_type", "POA")).ReceiveString();
             return get_url1;
         }

@@ -21,9 +21,12 @@ namespace Evoting_Nunit_test
 {
   public  class RTAUnitTest
     {
-        public RTAUnitTest(string event_ids)
+        public RTAUnitTest(string event_ids,int logoid,int reso_id,int noticeid)
         {
             this.event_id = event_ids;
+            this.UploadLogodocid = logoid;
+            this.UploadResolutiondocid = reso_id;
+            this.Uploadnoticedocid = noticeid;
         }
 
         RTA _objcom = new RTA();
@@ -33,6 +36,9 @@ namespace Evoting_Nunit_test
         public string event_id { get; set; }
         public int filedocid { get; set; }
         public string fileLocMove { get; set; }
+        public int UploadLogodocid { get; set; }
+        public int UploadResolutiondocid { get; set; }
+        public int Uploadnoticedocid { get; set; }
         public async Task<RTA_Module.RTA_Registration.Root> Test_RTARegistration()
         {
             var check = await _objcom.Post_Registration(RTA.Registration());
@@ -43,6 +49,22 @@ namespace Evoting_Nunit_test
             var check = await _objcom.Post_Login(RTA.Default_user(RTAuserId));
             RTA_Module.RTA_Login.Root someval = JsonConvert.DeserializeObject<RTA_Module.RTA_Login.Root>(check);
             token = someval.data.Token;
+        }
+
+        public async Task Test_Putprofile()
+        {
+            var check = await _objcom.Put_Profile(RTA.Profile(), token);
+            RTA_Module.RTA_Put_Profile.Root someval = JsonConvert.DeserializeObject<RTA_Module.RTA_Put_Profile.Root>(check);
+            Assert.IsNotNull(someval.message);
+            Assert.AreEqual(200, someval.statusCode);
+        }
+
+        public async Task Test_Get_Prifile()
+        {
+            var check = await _objcom.Get_Profile(token);
+            RTA_Module.RTA_Get_Profile.Root someval = JsonConvert.DeserializeObject<RTA_Module.RTA_Get_Profile.Root>(check);
+            Assert.IsNotNull(someval.message);
+            Assert.AreEqual(200, someval.statusCode);
         }
         public async Task Test_postdownloadagreement()
         {
@@ -71,7 +93,7 @@ namespace Evoting_Nunit_test
         }
         public async Task Test_Putgenerateevent()
         {
-            var check = await _objcom.Put_UpdateEven(RTA.Update_Event(event_id),token);
+            var check = await _objcom.Put_UpdateEven(RTA.Update_Event(event_id,UploadLogodocid,UploadResolutiondocid,Uploadnoticedocid),token);
             RTA_Module.RTA_Putgenerateevent.Root someval = JsonConvert.DeserializeObject<RTA_Module.RTA_Putgenerateevent.Root>(check);
             Assert.IsNotNull(someval.message);
             Assert.AreEqual(200, someval.statusCode);
