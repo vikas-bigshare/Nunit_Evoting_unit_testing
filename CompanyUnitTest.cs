@@ -308,8 +308,8 @@ namespace Evoting_Nunit_test
             await ObjEvotAgency.Test_GetAccount();
             await ObjEvotAgency.Test_PostAccountVerify();
             await ObjEvotAgency.Test_PostAccountSearch();
+            await ObjEvotAgency.Test_Postintimation();
 
-            
         }
     }
 }

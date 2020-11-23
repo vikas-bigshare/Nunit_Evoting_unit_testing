@@ -84,6 +84,11 @@ namespace Evoting_Nunit_test
         {
             public class Data
             {
+                public int event_id { get; set; }
+            }
+
+            public class Resolution
+            {
                 public string Remark { get; set; }
                 public string UpdateBy { get; set; }
                 public int EVENT_ID { get; set; }
@@ -108,17 +113,6 @@ namespace Evoting_Nunit_test
                 public string Upload_Resolution_Filepath { get; set; }
             }
 
-            public class Resolution
-            {
-                public int EVENT_RESOLUTION_ID { get; set; }
-                public string title { get; set; }
-                public string description { get; set; }
-                public string ModifiedBY { get; set; }
-                public string File_doc_path { get; set; }
-                public int FILE_DOC_ID { get; set; }
-                public DateTime modified_datetime { get; set; }
-            }
-
             public class Root
             {
                 public int statusCode { get; set; }
@@ -126,6 +120,7 @@ namespace Evoting_Nunit_test
                 public Data data { get; set; }
                 public List<Resolution> resolution { get; set; }
             }
+
 
 
 

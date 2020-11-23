@@ -22,7 +22,9 @@ namespace Evoting_Nunit_test
         public static FJC_LoginRequest Default_user()
         {
             return new FJC_LoginRequest()
-            { UserID = "1201770101122278", system_ip = "127.0.0.1", encrypt_Password = "bigshare@123" };
+           //// { UserID = "1201770101122278", system_ip = "127.0.0.1", encrypt_Password = "bigshare@123" };
+
+            { UserID = "1201090000325178", system_ip = "127.0.0.1", encrypt_Password = "bigshare@123" };
             //{ UserID = "T400000000000025", system_ip = "127.0.0.1", encrypt_Password = "bigshare@123" };
         }
         public static FJC_ForgotPassword forgot_password()   //reset password

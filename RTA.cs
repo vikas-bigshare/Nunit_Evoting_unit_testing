@@ -36,9 +36,9 @@ namespace Evoting_Nunit_test
             return new FJC_UpdateEVENT()
             {
                 event_id =Convert.ToInt32(EventId),
-                voting_start_datetime = "Oct 29 2020 10:15AM",
-                voting_end_datetime = "Oct 29 2020 12:00PM",
-                meeting_datetime = "Oct 25 2020 12:00PM",
+                voting_start_datetime = "2020-11-17 09:00:00",
+                voting_end_datetime = "2020-11-17 18:00:00",
+                meeting_datetime = "2020-11-17 18:00:00",
                 last_date_notice = "2020-09-1",
                 voting_result_date = "2020-09-10",
                 upload_logo = logoid,
